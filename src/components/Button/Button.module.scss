@@ -3,7 +3,9 @@ button.button {
   font-size: 14px;
   font-weight: 300;
   letter-spacing: 0.2px;
+  background-color: transparent;
   border: none;
+  user-select: none;
 
   &:hover {
     cursor: pointer;
