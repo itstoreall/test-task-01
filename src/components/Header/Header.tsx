@@ -1,5 +1,31 @@
+import { NavLink } from 'react-router-dom';
+import Button from '../Button';
+import s from './Header.module.scss';
+
+const config = {
+  button: {
+    edit: { path: '/', content: 'Edit Users' },
+    users: { path: '/users', content: 'Users' }
+  }
+};
+
+const { edit, users } = config.button;
+
+const NavButton = ({ path, content }: { path: string; content: string }) => (
+  <NavLink to={path} className={({ isActive }) => (isActive ? s.active : '')}>
+    <Button content={content} />
+  </NavLink>
+);
+
 const Header = () => {
-  return <header>header</header>;
+  return (
+    <header className={s.header}>
+      <nav className={s.navigation}>
+        <NavButton path={edit.path} content={edit.content} />
+        <NavButton path={users.path} content={users.content} />
+      </nav>
+    </header>
+  );
 };
 
 export default Header;

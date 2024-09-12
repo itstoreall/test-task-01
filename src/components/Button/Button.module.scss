@@ -1,0 +1,11 @@
+button.button {
+  font-family: 'Rubik', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.2px;
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

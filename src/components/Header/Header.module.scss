@@ -1,0 +1,25 @@
+header.header {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  border-bottom: 1px solid #000000;
+
+  > nav.navigation {
+    display: flex;
+    gap: 20px;
+
+    > a {
+      > button {
+        width: 200px;
+        height: 48px;
+        border: 1px solid #c4c4c4;
+      }
+
+      &.active {
+        > button {
+          background-color: #c4c4c4;
+        }
+      }
+    }
+  }
+}

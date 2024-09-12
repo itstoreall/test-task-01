@@ -1,18 +1,25 @@
 import Header from './components/Header';
-import Main from './components/Main';
 import s from './App.module.scss';
 import Container from './components/container/Container';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import EditUser from './components/Pages/EditUserPage';
+import Users from './components/Pages/UsersPage';
 
 function App() {
   return (
-    <div className={s.app}>
-      <Container label={'app'}>
-        <>
-          <Header />
-          <Main />
-        </>
-      </Container>
-    </div>
+    <BrowserRouter>
+      <div className={s.app}>
+        <Container label={'app'}>
+          <>
+            <Header />
+            <Routes>
+              <Route path='/' element={<EditUser />} />
+              <Route path='/users' element={<Users />} />
+            </Routes>
+          </>
+        </Container>
+      </div>
+    </BrowserRouter>
   );
 }
 
