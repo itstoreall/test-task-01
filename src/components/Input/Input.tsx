@@ -3,15 +3,20 @@ import s from './Input.module.scss';
 
 type InputProps = {
   header: string;
+  disabled?: boolean;
 };
 
 type InputType = (props: InputProps) => ReactElement;
 
-const Input: InputType = ({ header }) => {
+const Input: InputType = ({ header, disabled }) => {
   return (
     <form className={s.inputForm}>
       <label className={s.label}>{header}</label>
-      <input className={s.input} value={'Oleg Schevchenko'} disabled />
+      <input
+        className={`${s.input} ${disabled ? s.disabled : ''}`}
+        value={'Oleg Schevchenko'}
+        disabled
+      />
     </form>
   );
 };

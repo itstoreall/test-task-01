@@ -1,3 +1,4 @@
+import useDropdownState from '../../hooks/useDropdownState';
 import Input from '../Input';
 import Dropdown from '../Dropdown';
 import s from './Pages.module.scss';
@@ -5,32 +6,61 @@ import s from './Pages.module.scss';
 const config = {
   title: 'Edit User',
   subtitle: 'User Information',
-  inputHeader: 'Full Name'
+  input: { user: 'user', name: 'full name' },
+  dropdown: {
+    department: 'department',
+    country: 'country',
+    status: 'status'
+  }
 };
 
-const { title, subtitle, inputHeader } = config;
+const { title, subtitle } = config;
+const { user, name } = config.input;
+const { department, country, status } = config.dropdown;
 
 const EditUser = () => {
+  const { openDropdown, handleToggle, handleClose } = useDropdownState();
+
   return (
     <main className={s.main}>
       <section className={`${s.content} ${s.editUser}`}>
         <h2>{title}</h2>
 
         <div className={s.ownerBlock}>
-          <Dropdown />
+          <Dropdown
+            header={user}
+            isOpen={openDropdown === user}
+            onToggle={() => handleToggle(user)}
+            onClose={handleClose}
+          />
         </div>
 
         <div className={s.companyInfoBlock}>
           <h3 className={s.subtitle}>{subtitle}</h3>
 
           <div className={s.frame}>
-            <Input header={inputHeader} />
-            <Dropdown />
+            <Input header={name} disabled />
+            <Dropdown
+              header={department}
+              isOpen={openDropdown === department}
+              onToggle={() => handleToggle(department)}
+              onClose={handleClose}
+            />
           </div>
 
           <div className={s.frame}>
-            <Dropdown />
-            <Dropdown />
+            <Dropdown
+              header={country}
+              isOpen={openDropdown === country}
+              onToggle={() => handleToggle(country)}
+              onClose={handleClose}
+            />
+            <Dropdown
+              header={status}
+              isOpen={openDropdown === status}
+              onToggle={() => handleToggle(status)}
+              onClose={handleClose}
+            />
           </div>
         </div>
       </section>
