@@ -152,6 +152,17 @@ input {
   overflow: visible;
 }
 
+h3,
+span,
+button,
+label,
+input {
+  font-family: 'Rubik', sans-serif;
+  line-height: 20px;
+  letter-spacing: 0.2px;
+  color: #5e626b;
+}
+
 button,
 select {
   text-transform: none;

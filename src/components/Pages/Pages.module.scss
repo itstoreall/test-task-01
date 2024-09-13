@@ -13,7 +13,7 @@ main.main {
       text-align: center;
     }
 
-    &.edit {
+    &.editUser {
       > h2 {
         margin-bottom: 80px;
       }
@@ -24,6 +24,13 @@ main.main {
 
       .companyInfoBlock {
         color: #5e626b;
+
+        > h3.subtitle {
+          margin-bottom: 40px;
+          font-size: 20px;
+          line-height: 32px;
+          color: #000000;
+        }
       }
     }
 

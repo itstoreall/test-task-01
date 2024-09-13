@@ -1,0 +1,17 @@
+form.inputForm {
+  display: flex;
+  flex-direction: column;
+
+  > label.label {
+    margin-bottom: 4px;
+    font-size: 14px;
+  }
+
+  > input.input {
+    padding: 0 24px;
+    height: 48px;
+    color: #5e626b;
+    background-color: transparent;
+    border: 1px solid #e3e8ee;
+  }
+}
