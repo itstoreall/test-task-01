@@ -1,12 +1,14 @@
+@import '../../styles';
+
 header.header {
-  display: flex;
-  justify-content: center;
-  padding: 20px 0;
+  min-width: $desktop;
   border-bottom: 1px solid #000000;
 
-  > nav.navigation {
+  nav.navigation {
     display: flex;
+    justify-content: center;
     gap: 20px;
+    padding: 20px 0;
 
     > a {
       > button {

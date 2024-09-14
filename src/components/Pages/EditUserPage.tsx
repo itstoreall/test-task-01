@@ -39,7 +39,7 @@ const EditUser = () => {
           <h3 className={s.subtitle}>{subtitle}</h3>
 
           <div className={s.frame}>
-            <Input header={name} disabled />
+            <Input header={name} readOnly />
             <Dropdown
               header={department}
               isOpen={openDropdown === department}

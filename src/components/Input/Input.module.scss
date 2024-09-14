@@ -1,6 +1,7 @@
 form.inputForm {
   display: flex;
   flex-direction: column;
+  width: 100%;
 
   > label.label {
     margin-bottom: 4px;
@@ -14,6 +15,11 @@ form.inputForm {
     color: #5e626b;
     background-color: transparent;
     border: 1px solid #e3e8ee;
+    outline: none;
+
+    &.readOnly {
+      pointer-events: none;
+    }
 
     &.disabled {
       pointer-events: none;

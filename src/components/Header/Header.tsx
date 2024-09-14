@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import Container from '../container';
 import Button from '../Button';
 import s from './Header.module.scss';
 
@@ -20,10 +21,12 @@ const NavButton = ({ path, content }: { path: string; content: string }) => (
 const Header = () => {
   return (
     <header className={s.header}>
-      <nav className={s.navigation}>
-        <NavButton path={edit.path} content={edit.content} />
-        <NavButton path={users.path} content={users.content} />
-      </nav>
+      <Container label={'page'}>
+        <nav className={s.navigation}>
+          <NavButton path={edit.path} content={edit.content} />
+          <NavButton path={users.path} content={users.content} />
+        </nav>
+      </Container>
     </header>
   );
 };

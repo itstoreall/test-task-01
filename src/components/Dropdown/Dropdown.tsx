@@ -22,7 +22,6 @@ const Dropdown: DropdownType = ({ header, isOpen, onToggle, onClose }) => {
         className={s.input}
         ref={dropdownRef}
         value={'Dropdown mock data'}
-        readOnly
         onClick={onToggle}
       />
 
@@ -32,16 +31,22 @@ const Dropdown: DropdownType = ({ header, isOpen, onToggle, onClose }) => {
         <div className={s.dropdown}>
           <ul className={s.dropdownList}>
             <li className={s.dropdownItem} onClick={onClose}>
-              <span className={s.symbol}>D</span>
-              <span className={s.text}>{header}</span>
+              <span className={s.itemContent}>
+                <span className={s.symbol}>D</span>
+                <span className={s.text}>{header}</span>
+              </span>
             </li>
             <li className={s.dropdownItem} onClick={onClose}>
-              <span className={s.symbol}>D</span>
-              <span className={s.text}>{header}</span>
+              <span className={s.itemContent}>
+                <span className={s.symbol}>D</span>
+                <span className={s.text}>{header}</span>
+              </span>
             </li>
             <li className={s.dropdownItem} onClick={onClose}>
-              <span className={s.symbol}>D</span>
-              <span className={s.text}>{header}</span>
+              <span className={s.itemContent}>
+                <span className={s.symbol}>D</span>
+                <span className={s.text}>{header}</span>
+              </span>
             </li>
           </ul>
         </div>
