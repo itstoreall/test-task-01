@@ -1,10 +1,10 @@
 import { ReactElement, useEffect, useState } from 'react';
+import useDropdown from '../../hooks/useDropdown';
 import SelectArrowIcon from '../../assets/icon/SelectArrowIcon';
 import CheckboxIcon from '../../assets/icon/CheckboxIcon';
-import useDropdown from '../../hooks/useDropdown';
 import s from './DropdownSelectable.module.scss';
 
-type InputEvent = React.ChangeEvent<HTMLInputElement>;
+type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
 type DataItem = { name: string; value: string };
 
@@ -39,7 +39,7 @@ const DropdownSelectable: DropdownType = props => {
     setCheckedItems(newCheckedItems);
   };
 
-  const handleSearchChange = (e: InputEvent) => {
+  const handleSearchChange = (e: InputChangeEvent) => {
     setSearchTerm(e.target.value);
   };
 
@@ -55,20 +55,21 @@ const DropdownSelectable: DropdownType = props => {
     <form className={s.dropdownForm}>
       <label className={s.label}>{header}</label>
 
-      <div className={s.select}>
+      <div className={s.select} ref={dropdownRef}>
         <input
           className={s.input}
-          ref={dropdownRef}
-          value={searchTerm}
-          onClick={onToggle}
-          onChange={handleSearchChange}
           placeholder={placeholder}
+          value={searchTerm}
+          onChange={handleSearchChange}
+          onClick={() => !isOpen && onToggle()}
         />
 
-        <SelectArrowIcon status={isOpen ? 'open' : 'close'} />
+        <span className={s.arrowButton} onClick={onToggle}>
+          <SelectArrowIcon status={isOpen ? 'open' : 'close'} />
+        </span>
 
         {isOpen && (
-          <div className={s.dropdown} ref={dropdownRef}>
+          <div className={s.dropdown}>
             <ul className={s.dropdownList}>
               {chosenData.map((item, index) => (
                 <li

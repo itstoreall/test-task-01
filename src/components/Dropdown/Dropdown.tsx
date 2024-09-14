@@ -27,7 +27,9 @@ const Dropdown: DropdownType = ({ header, isOpen, onToggle, onClose }) => {
           onClick={onToggle}
         />
 
-        <SelectArrowIcon status={isOpen ? 'open' : 'close'} />
+        <span className={s.arrowButton} onClick={onToggle}>
+          <SelectArrowIcon status={isOpen ? 'open' : 'close'} />
+        </span>
 
         {isOpen && (
           <div className={s.dropdown}>
