@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 import s from './Input.module.scss';
 
 type InputProps = {
-  header: string;
+  header: string | null;
   readOnly?: boolean;
   disabled?: boolean;
 };

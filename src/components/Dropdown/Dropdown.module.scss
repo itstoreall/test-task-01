@@ -1,5 +1,4 @@
 form.dropdownForm {
-  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -11,55 +10,60 @@ form.dropdownForm {
     user-select: none;
   }
 
-  > input.input {
-    padding: 0 24px;
-    height: 48px;
-    color: #5e626b;
-    background-color: transparent;
-    border: 1px solid #e3e8ee;
-    outline: none;
-  }
+  .select {
+    position: relative;
 
-  > svg {
-    position: absolute;
-    top: 33px;
-    right: 12px;
-    pointer-events: none;
-  }
+    > input.input {
+      padding: 0 24px;
+      width: calc(100% - 50px);
+      height: 48px;
+      color: #5e626b;
+      background-color: transparent;
+      border: 1px solid #e3e8ee;
+      outline: none;
+    }
 
-  .dropdown {
-    position: absolute;
-    top: 73px;
-    width: calc(100% - 2px);
-    background-color: white;
-    border: 1px solid #e3e8ee;
-    border-top: transparent;
-    z-index: 22;
+    > svg {
+      position: absolute;
+      top: 9px;
+      right: 12px;
+      pointer-events: none;
+    }
 
-    > ul.dropdownList {
-      > li.dropdownItem {
-        display: flex;
-        align-items: center;
-        padding: 0 25px;
-        height: 40px;
+    .dropdown {
+      position: absolute;
+      top: 49px;
+      width: calc(100% - 2px);
+      background-color: white;
+      border: 1px solid #e3e8ee;
+      border-top: transparent;
+      z-index: 22;
 
-        > span.itemContent {
+      > ul.dropdownList {
+        > li.dropdownItem {
           display: flex;
           align-items: center;
-          gap: 12px;
-          width: 100%;
-          height: 80%;
+          padding: 0 25px;
+          height: 40px;
 
-          &:hover {
-            cursor: pointer;
-          }
+          > span.itemContent {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            height: 80%;
 
-          > span.symbol {
-            font-weight: 700;
-          }
+            &:hover {
+              cursor: pointer;
+            }
 
-          > span.text {
-            font-weight: 300;
+            > span.symbol {
+              font-weight: 700;
+            }
+
+            > span.text {
+              font-weight: 300;
+            }
           }
         }
       }
