@@ -7,7 +7,8 @@ const config = {
   heading:
     'Please add at least 3 departmetns to be able to proceed next steps.',
   dropdownSelectable: {
-    departments: 'departments'
+    departments: 'departments',
+    placeholder: 'Select departments'
   },
   dropdown: {
     country: 'country',
@@ -28,7 +29,7 @@ const departmentsData = [
   { name: 'Product Management', value: 'PM' }
 ];
 
-const { departments } = config.dropdownSelectable;
+const { departments, placeholder } = config.dropdownSelectable;
 const { country, status } = config.dropdown;
 
 const FilterHeading = () => {
@@ -40,6 +41,7 @@ const FilterHeading = () => {
       <div>
         <DropdownSelectable
           header={null}
+          placeholder={placeholder}
           data={departmentsData}
           isOpen={openDropdown === departments}
           onToggle={() => handleToggle(departments)}
