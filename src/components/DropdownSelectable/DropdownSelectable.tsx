@@ -1,28 +1,14 @@
-import { ReactElement, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useDropdown from '../../hooks/useDropdown';
 import SelectArrowIcon from '../../assets/icon/SelectArrowIcon';
 import CheckboxIcon from '../../assets/icon/CheckboxIcon';
+import * as gt from '../../types/global';
 import s from './DropdownSelectable.module.scss';
 
-type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
-
-type DataItem = { name: string; value: string };
-
-type DropdownProps = {
-  header: string | null;
-  placeholder: string;
-  data: DataItem[];
-  isOpen: boolean;
-  onToggle(): void;
-  onClose(): void;
-};
-
-type DropdownType = (props: DropdownProps) => ReactElement;
-
-const DropdownSelectable: DropdownType = props => {
+const DropdownSelectable: gt.DropdownType = props => {
   const { header, placeholder, data, isOpen, onToggle, onClose } = props;
 
-  const [dataItems, setDataItems] = useState<DataItem[]>([]);
+  const [dataItems, setDataItems] = useState<gt.DataItem[]>([]);
   const [checkedItems, setCheckedItems] = useState<boolean[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -30,7 +16,7 @@ const DropdownSelectable: DropdownType = props => {
 
   useEffect(() => {
     setCheckedItems(Array(data.length).fill(false));
-    setDataItems(data);
+    setDataItems(data as gt.DataItem[]);
   }, [data]);
 
   const handleItemClick = (index: number) => {
@@ -39,7 +25,7 @@ const DropdownSelectable: DropdownType = props => {
     setCheckedItems(newCheckedItems);
   };
 
-  const handleSearchChange = (e: InputChangeEvent) => {
+  const handleSearchChange = (e: gt.InputChangeEvent) => {
     setSearchTerm(e.target.value);
   };
 
@@ -53,7 +39,7 @@ const DropdownSelectable: DropdownType = props => {
 
   return (
     <form className={s.dropdownForm}>
-      <label className={s.label}>{header}</label>
+      {header && <label className={s.label}>{header}</label>}
 
       <div className={s.select} ref={dropdownRef}>
         <input

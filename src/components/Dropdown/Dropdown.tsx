@@ -1,30 +1,36 @@
-import { ReactElement } from 'react';
+import { useState } from 'react';
 import SelectArrowIcon from '../../assets/icon/SelectArrowIcon';
+import useDataCheck from '../../hooks/useDataCheck';
 import useDropdown from '../../hooks/useDropdown';
+import * as gt from '../../types/global';
 import s from './Dropdown.module.scss';
 
-type DropdownProps = {
-  header: string | null;
-  isOpen: boolean;
-  onToggle(): void;
-  onClose(): void;
-};
+type SelectedItem = gt.DataItemType | null;
 
-type DropdownType = (props: DropdownProps) => ReactElement;
+const Dropdown: gt.DropdownType = props => {
+  const { header, placeholder, data, isOpen, onToggle, onClose } = props;
 
-const Dropdown: DropdownType = ({ header, isOpen, onToggle, onClose }) => {
+  const [selectedItem, setSelectedItem] = useState<SelectedItem>(null);
+
   const { dropdownRef } = useDropdown({ isOpen, onClose });
+  const { isDataItem } = useDataCheck();
+
+  const handleSelect = (item: gt.DataItemType) => {
+    setSelectedItem(item);
+    onClose();
+  };
 
   return (
     <form className={s.dropdownForm}>
-      <label className={s.label}>{header}</label>
+      {header && <label className={s.label}>{header}</label>}
 
-      <div className={s.select}>
+      <div className={s.select} ref={dropdownRef}>
         <input
           className={s.input}
-          ref={dropdownRef}
-          value={'Dropdown mock data'}
-          onClick={onToggle}
+          placeholder={placeholder}
+          value={selectedItem ? selectedItem.name : ''}
+          onClick={() => !isOpen && onToggle()}
+          readOnly
         />
 
         <span className={s.arrowButton} onClick={onToggle}>
@@ -34,24 +40,20 @@ const Dropdown: DropdownType = ({ header, isOpen, onToggle, onClose }) => {
         {isOpen && (
           <div className={s.dropdown}>
             <ul className={s.dropdownList}>
-              <li className={s.dropdownItem} onClick={onClose}>
-                <span className={s.itemContent}>
-                  <span className={s.symbol}>D</span>
-                  <span className={s.text}>{header}</span>
-                </span>
-              </li>
-              <li className={s.dropdownItem} onClick={onClose}>
-                <span className={s.itemContent}>
-                  <span className={s.symbol}>D</span>
-                  <span className={s.text}>{header}</span>
-                </span>
-              </li>
-              <li className={s.dropdownItem} onClick={onClose}>
-                <span className={s.itemContent}>
-                  <span className={s.symbol}>D</span>
-                  <span className={s.text}>{header}</span>
-                </span>
-              </li>
+              {data.map((item, idx) => (
+                <li
+                  key={idx}
+                  className={s.dropdownItem}
+                  onClick={() => handleSelect(item)}
+                >
+                  <span className={s.itemContent}>
+                    {isDataItem(item) && (
+                      <span className={s.symbol}>{item.value}</span>
+                    )}
+                    <span className={s.text}>{item.name}</span>
+                  </span>
+                </li>
+              ))}
             </ul>
           </div>
         )}

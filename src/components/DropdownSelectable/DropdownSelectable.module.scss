@@ -17,6 +17,7 @@ form.dropdownForm {
       padding: 0 24px;
       width: calc(100% - 50px);
       height: 48px;
+      font-size: 14px;
       color: #5e626b;
       background-color: transparent;
       border: 1px solid #e3e8ee;
@@ -27,6 +28,7 @@ form.dropdownForm {
       position: absolute;
       top: 9px;
       right: 12px;
+      height: 32px;
     }
 
     .dropdown {

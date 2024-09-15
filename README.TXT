@@ -33,3 +33,4 @@
 - Додавання данних departmentsData
 - Додавання логіки пошуку
 - Оновлення логіки закривання DropdownSelectable
+- Додавання логіки обрання та відображення в Dropdown і DropdownSelectable

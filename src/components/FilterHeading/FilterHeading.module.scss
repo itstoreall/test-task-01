@@ -1,5 +1,14 @@
 .filterHeading {
   > span.heading {
+    display: block;
+    margin-bottom: 12px;
     color: #1b2438;
+  }
+
+  .dropdownBlock {
+    display: flex;
+    gap: 12px;
+    max-width: 684px;
+    background-color: skyblue;
   }
 }

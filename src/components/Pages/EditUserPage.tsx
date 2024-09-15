@@ -2,6 +2,7 @@ import useDropdownState from '../../hooks/useDropdownState';
 import Input from '../Input';
 import Dropdown from '../Dropdown';
 import s from './Pages.module.scss';
+import useData from '../../hooks/useData';
 
 const config = {
   title: 'Edit User',
@@ -21,6 +22,8 @@ const { department, country, status } = config.dropdown;
 const EditUser = () => {
   const { openDropdown, handleToggle, handleClose } = useDropdownState();
 
+  const data = useData();
+
   return (
     <main className={s.main}>
       <section className={`${s.content} ${s.editUser}`}>
@@ -29,6 +32,7 @@ const EditUser = () => {
         <div className={s.ownerBlock}>
           <Dropdown
             header={user}
+            data={data.user}
             isOpen={openDropdown === user}
             onToggle={() => handleToggle(user)}
             onClose={handleClose}
@@ -42,6 +46,7 @@ const EditUser = () => {
             <Input header={name} readOnly />
             <Dropdown
               header={department}
+              data={data.department}
               isOpen={openDropdown === department}
               onToggle={() => handleToggle(department)}
               onClose={handleClose}
@@ -51,12 +56,14 @@ const EditUser = () => {
           <div className={s.frame}>
             <Dropdown
               header={country}
+              data={data.country}
               isOpen={openDropdown === country}
               onToggle={() => handleToggle(country)}
               onClose={handleClose}
             />
             <Dropdown
               header={status}
+              data={data.status}
               isOpen={openDropdown === status}
               onToggle={() => handleToggle(status)}
               onClose={handleClose}
