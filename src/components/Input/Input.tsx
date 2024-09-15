@@ -3,13 +3,17 @@ import s from './Input.module.scss';
 
 type InputProps = {
   header: string | null;
+  placeholder: string;
+  value: string;
   readOnly?: boolean;
   disabled?: boolean;
 };
 
 type InputType = (props: InputProps) => ReactElement;
 
-const Input: InputType = ({ header, readOnly, disabled }) => {
+const Input: InputType = props => {
+  const { header, placeholder, value, readOnly, disabled } = props;
+
   const disableStyle = disabled ? s.disabled : '';
   const readOnlyStyle = readOnly ? s.readOnly : '';
   const inputStyle = `${s.input} ${readOnlyStyle} ${disableStyle}`;
@@ -19,7 +23,8 @@ const Input: InputType = ({ header, readOnly, disabled }) => {
       <label className={s.label}>{header}</label>
       <input
         className={inputStyle}
-        value={'Oleg Schevchenko'}
+        placeholder={placeholder}
+        value={value}
         disabled={disabled}
         readOnly={readOnly}
       />

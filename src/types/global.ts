@@ -24,6 +24,8 @@ export type DropdownProps = {
   isOpen: boolean;
   onToggle(): void;
   onClose(): void;
+  initSelectedItem?: DataItem | null;
+  handleSelectedItem?: (user: UserDataItem) => void;
 };
 
 export type DropdownType = (props: DropdownProps) => ReactElement;

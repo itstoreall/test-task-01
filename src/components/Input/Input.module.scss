@@ -20,10 +20,14 @@ form.inputForm {
 
     &.readOnly {
       pointer-events: none;
+      user-select: none;
     }
 
+    /*
     &.disabled {
       pointer-events: none;
+      user-select: none;
     }
+    */
   }
 }
