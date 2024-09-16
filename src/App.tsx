@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
-import Container from './components/container';
+import Container from './components/Container';
 import EditUser from './components/Pages/EditUserPage';
 import Users from './components/Pages/UsersPage';
 import s from './App.module.scss';

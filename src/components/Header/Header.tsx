@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import Container from '../container';
+import Container from '../Container';
 import Button from '../Button';
 import s from './Header.module.scss';
 

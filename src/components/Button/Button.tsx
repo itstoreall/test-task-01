@@ -1,10 +1,16 @@
 import { ReactElement } from 'react';
 import s from './Button.module.scss';
 
-type ButtonType = (props: { content: string }) => ReactElement;
+type ButtonProps = {
+  content: string;
+  onClick?: () => void;
+  id?: string;
+};
 
-const Button: ButtonType = ({ content }) => (
-  <button className={s.button}>{content}</button>
+const Button = ({ content, onClick, id }: ButtonProps): ReactElement => (
+  <button className={s.button} onClick={onClick} id={id}>
+    {content}
+  </button>
 );
 
 export default Button;

@@ -3,7 +3,7 @@
 .container {
   &.page {
     margin: 0 auto;
-    min-width: $desktop;
+    min-width: $max;
     max-width: $max;
   }
 }

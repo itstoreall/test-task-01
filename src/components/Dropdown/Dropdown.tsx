@@ -9,29 +9,35 @@ import s from './Dropdown.module.scss';
 type SelectedItem = gt.DataItemType | null | undefined;
 
 const Dropdown: gt.DropdownType = props => {
-  const { header, placeholder, data, isOpen, initSelectedItem } = props;
+  const {
+    header,
+    placeholder,
+    data,
+    isOpen,
+    initSelectedItem,
+    disabled = false
+  } = props;
+
   const { onToggle, onClose, handleSelectedItem } = props;
   const initState = initSelectedItem || null;
 
   const [selectedItem, setSelectedItem] = useState<SelectedItem>(initState);
 
   const { dropdownRef } = useDropdown({ isOpen, onClose });
-  const { isDataItem, isUserDataItem } = useDataCheck();
+  const { isDataItem } = useDataCheck();
+
+  useEffect(() => setSelectedItem(initSelectedItem), [initSelectedItem]);
 
   useEffect(() => {
-    setSelectedItem(initSelectedItem);
-  }, [initSelectedItem]);
-
-  useEffect(() => {
-    handleSelectedItem &&
-      isUserDataItem(selectedItem) &&
-      handleSelectedItem(selectedItem);
+    handleSelectedItem && handleSelectedItem(selectedItem as gt.DataItemType);
   }, [selectedItem]);
 
   const handleSelect = (item: gt.DataItemType) => {
     setSelectedItem(item);
     onClose();
   };
+
+  const toggleHandler = () => !disabled && onToggle();
 
   return (
     <form className={s.dropdownForm}>
@@ -42,11 +48,12 @@ const Dropdown: gt.DropdownType = props => {
           className={s.input}
           placeholder={placeholder}
           value={selectedItem ? selectedItem.name : ''}
-          onClick={() => !isOpen && onToggle()}
+          onClick={() => !isOpen && !disabled && onToggle()}
+          disabled={disabled}
           readOnly
         />
 
-        <span className={s.arrowButton} onClick={onToggle}>
+        <span className={s.arrowButton} onClick={toggleHandler}>
           <SelectArrowIcon status={isOpen ? 'open' : 'close'} />
         </span>
 
