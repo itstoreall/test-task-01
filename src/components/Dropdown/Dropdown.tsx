@@ -8,8 +8,19 @@ import s from './Dropdown.module.scss';
 
 type SelectedItem = gt.DataItemType | null | undefined;
 
+const config = {
+  dropdown: {
+    department: 'department',
+    country: 'country',
+    status: 'status'
+  }
+};
+
+const { department, status } = config.dropdown;
+
 const Dropdown: gt.DropdownType = props => {
   const {
+    label,
     header,
     placeholder,
     data,
@@ -26,6 +37,9 @@ const Dropdown: gt.DropdownType = props => {
   const { dropdownRef } = useDropdown({ isOpen, onClose });
   const { isDataItem } = useDataCheck();
 
+  const isDepartment = label === department;
+  const isStatus = label === status;
+
   useEffect(() => setSelectedItem(initSelectedItem), [initSelectedItem]);
 
   useEffect(() => {
@@ -38,6 +52,10 @@ const Dropdown: gt.DropdownType = props => {
   };
 
   const toggleHandler = () => !disabled && onToggle();
+
+  // ---
+
+  const symbolStyle = `${s.symbol} ${(isStatus || isDepartment) && s.expand}`;
 
   return (
     <form className={s.dropdownForm}>
@@ -68,9 +86,14 @@ const Dropdown: gt.DropdownType = props => {
                 >
                   <span className={s.itemContent}>
                     {isDataItem(item) && (
-                      <span className={s.symbol}>{item.value}</span>
+                      <span className={symbolStyle}>
+                        {isStatus ? item.value.slice(0, 3) : item.value}
+                      </span>
                     )}
-                    <span className={s.text}>{item.name}</span>
+
+                    <span className={s.textWrap}>
+                      <span className={s.text}>{item.name}</span>
+                    </span>
                   </span>
                 </li>
               ))}

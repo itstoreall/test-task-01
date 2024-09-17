@@ -2,9 +2,9 @@ import useDropdownState from '../../hooks/useDropdownState';
 import useData from '../../hooks/useData';
 import DropdownSelectable from '../DropdownSelectable';
 import Dropdown from '../Dropdown';
-import s from './FilterHeading.module.scss';
 import BinIcon from '../../assets/icon/BinIcon';
 import Button from '../Button';
+import s from './FilterHeading.module.scss';
 
 const config = {
   heading:
@@ -48,6 +48,7 @@ const FilterHeading = () => {
           onClose={handleClose}
         />
         <Dropdown
+          label={country}
           header={null}
           placeholder={countryPlaceholder}
           data={data.country}
@@ -56,6 +57,7 @@ const FilterHeading = () => {
           onClose={handleClose}
         />
         <Dropdown
+          label={status}
           header={null}
           placeholder={statusPlaceholder}
           data={data.status}

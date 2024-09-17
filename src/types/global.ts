@@ -18,6 +18,7 @@ export type DataItemType = DataItem | UserDataItem;
 export type DataType = DataItem[] | UserDataItem[];
 
 export type DropdownProps = {
+  label?: string;
   header: string | null;
   placeholder?: string;
   data: DataType;

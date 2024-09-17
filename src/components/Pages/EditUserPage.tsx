@@ -84,6 +84,7 @@ const EditUser = () => {
             />
 
             <Dropdown
+              label={department}
               header={department}
               placeholder={dropdown.departmentPlaceholder}
               data={data.department}
@@ -98,6 +99,7 @@ const EditUser = () => {
 
           <div className={s.frame}>
             <Dropdown
+              label={country}
               header={country}
               placeholder={dropdown.countryPlaceholder}
               data={data.country}
@@ -110,6 +112,7 @@ const EditUser = () => {
             />
 
             <Dropdown
+              label={status}
               header={status}
               placeholder={dropdown.statusPlaceholder}
               data={data.status}

@@ -58,12 +58,33 @@ form.dropdownForm {
               cursor: pointer;
             }
 
-            > span.symbol {
-              font-weight: 700;
-            }
+            > span {
+              font-size: 14px;
+              color: #5e626b;
+              white-space: nowrap;
 
-            > span.text {
-              font-weight: 300;
+              &.symbol {
+                display: flex;
+                align-items: center;
+                height: 24px;
+                min-width: 24px;
+                font-weight: 700;
+              }
+
+              &.textWrap {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+
+                > span.text {
+                  font-weight: 300;
+                  background-color: white;
+                }
+
+                &:hover {
+                  overflow: visible;
+                }
+              }
             }
           }
         }

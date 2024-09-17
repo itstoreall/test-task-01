@@ -67,7 +67,10 @@ const DropdownSelectable: gt.DropdownType = props => {
                     <span className={s.symbol}>
                       <CheckboxIcon isChecked={true} />
                     </span>
-                    <span className={s.text}>{item.name}</span>
+
+                    <span className={s.textWrap}>
+                      <span className={s.text}>{item.name}</span>
+                    </span>
                   </span>
                 </li>
               ))}
@@ -76,13 +79,16 @@ const DropdownSelectable: gt.DropdownType = props => {
                 <li
                   key={`filtered-${index}`}
                   className={s.dropdownItem}
-                  onClick={e => handleItemClick(dataItems.indexOf(item))}
+                  onClick={() => handleItemClick(dataItems.indexOf(item))}
                 >
                   <span className={s.itemContent}>
                     <span className={s.symbol}>
                       <CheckboxIcon isChecked={false} />
                     </span>
-                    <span className={s.text}>{item.name}</span>
+
+                    <span className={s.textWrap}>
+                      <span className={s.text}>{item.name}</span>
+                    </span>
                   </span>
                 </li>
               ))}
