@@ -2,13 +2,36 @@
   > span.heading {
     display: block;
     margin-bottom: 12px;
+    font-size: 14px;
+    font-weight: 300;
     color: #1b2438;
   }
 
-  .dropdownBlock {
+  .filterBlock {
     display: flex;
     gap: 12px;
-    max-width: 684px;
-    // background-color: skyblue;
+
+    > form {
+      max-width: 220px;
+    }
+
+    .buttonBlock {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      > button {
+        width: 150px;
+        border: 1px solid #c4c4c4;
+
+        &.deleteButton {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 48px;
+          background-color: transparent;
+        }
+      }
+    }
   }
 }

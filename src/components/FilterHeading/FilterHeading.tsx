@@ -3,6 +3,8 @@ import useData from '../../hooks/useData';
 import DropdownSelectable from '../DropdownSelectable';
 import Dropdown from '../Dropdown';
 import s from './FilterHeading.module.scss';
+import BinIcon from '../../assets/icon/BinIcon';
+import Button from '../Button';
 
 const config = {
   heading:
@@ -16,12 +18,16 @@ const config = {
     status: 'status',
     countryPlaceholder: 'Select country',
     statusPlaceholder: 'All Statuses'
+  },
+  button: {
+    addUser: 'Add User'
   }
 };
 
 const { departments, departmentsPlaceholder } = config.dropdownSelectable;
 const { countryPlaceholder, statusPlaceholder } = config.dropdown;
 const { country, status } = config.dropdown;
+const { addUser } = config.button;
 
 const FilterHeading = () => {
   const { openDropdown, handleToggle, handleClose } = useDropdownState();
@@ -31,7 +37,8 @@ const FilterHeading = () => {
   return (
     <div className={s.filterHeading}>
       <span className={s.heading}>{config.heading}</span>
-      <div className={s.dropdownBlock}>
+
+      <div className={s.filterBlock}>
         <DropdownSelectable
           header={null}
           placeholder={departmentsPlaceholder}
@@ -56,6 +63,14 @@ const FilterHeading = () => {
           onToggle={() => handleToggle(status)}
           onClose={handleClose}
         />
+
+        <div className={s.buttonBlock}>
+          <button className={s.deleteButton}>
+            <BinIcon />
+          </button>
+
+          <Button content={addUser} />
+        </div>
       </div>
     </div>
   );

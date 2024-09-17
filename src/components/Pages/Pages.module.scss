@@ -51,11 +51,10 @@ main.main {
         display: flex;
         justify-content: flex-end;
         gap: 20px;
-        height: 48px;
 
         > span.buttonBox {
           > button {
-            height: 100%;
+            text-transform: capitalize;
             color: #c4c4c4;
             border: 1px solid #c4c4c4;
           }
