@@ -1,23 +1,11 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
-import useDropdownState from '../../hooks/useDropdownState';
-import useData from '../../hooks/useData';
+import useEditUser from '../../hooks/useEditUser';
 import * as gt from '../../types/global';
 import Input from '../Input';
 import Dropdown from '../Dropdown';
 import Button from '../Button';
 import s from './Pages.module.scss';
 
-type SelectedUser = gt.UserDataItem | null;
-
 type HandleUserSelect = (item: gt.DataItemType) => void;
-
-type Key = keyof gt.UserDataItem;
-
-type HandleDropdownChange = (
-  field: keyof gt.UserDataItem,
-  value: gt.DataItemType
-) => void;
 
 const config = {
   title: 'Edit User',
@@ -47,82 +35,21 @@ const { user, name } = config.input;
 const { department, country, status } = config.dropdown;
 
 const EditUser = () => {
-  const [users, setUsers] = useState<gt.UserDataItem[] | null>(null);
-  const [selectedUser, setSelectedUser] = useState<SelectedUser>(null);
-  const [isDataChanges, setIsDataChanges] = useState(false);
-
-  const { openDropdown, handleToggle, handleClose } = useDropdownState();
-
-  const data = useData();
-
-  useEffect(() => {
-    setUsers(data.user);
-  }, []);
-
-  useEffect(() => {
-    const initUsers = users?.find(user => user.name === selectedUser?.name);
-    const isChanged = isUserDataChange(initUsers!, selectedUser!);
-    if (isChanged && !isDataChanges) {
-      setIsDataChanges(true);
-    } else if (!isChanged && isDataChanges) {
-      setIsDataChanges(false);
-    }
-  }, [selectedUser]);
-
-  type IsUserDataChange = (
-    init: gt.UserDataItem,
-    selected: gt.UserDataItem
-  ) => boolean;
-
-  const isUserDataChange: IsUserDataChange = (init, selected) => {
-    let isChanged = false;
-    for (const key in init) {
-      if (init.hasOwnProperty(key) && selected.hasOwnProperty(key)) {
-        const initValue = (init[key as Key] as gt.DataItem).value;
-        const selectedValue = (selected[key as Key] as gt.DataItem).value;
-        if (initValue !== selectedValue) isChanged = true;
-      }
-    }
-    return isChanged;
-  };
-
-  const handleUserSelect = (user: gt.UserDataItem) => {
-    setSelectedUser(user);
-    setIsDataChanges(false);
-    handleClose();
-  };
-
-  const undoChanges = () => {
-    if (!selectedUser || !users || !isDataChanges) return;
-    const initUsers = users.find(user => user.name === selectedUser.name);
-    if (initUsers) {
-      setSelectedUser(initUsers);
-      setIsDataChanges(false);
-    }
-  };
-
-  const saveChanges = () => {
-    if (!isDataChanges || !users || !selectedUser) return;
-    const updatedUser = users.map(user =>
-      user.name === selectedUser.name ? selectedUser : user
-    );
-    setIsDataChanges(false);
-    setUsers(updatedUser);
-  };
-
-  const setDepartment = (item: gt.DataItemType) =>
-    handleDropdownChange(department as keyof gt.UserDataItem, item);
-
-  const setCountry = (item: gt.DataItemType) =>
-    handleDropdownChange(country as keyof gt.UserDataItem, item);
-
-  const setStatus = (item: gt.DataItemType) =>
-    handleDropdownChange(status as keyof gt.UserDataItem, item);
-
-  const handleDropdownChange: HandleDropdownChange = (field, value) =>
-    selectedUser && setSelectedUser({ ...selectedUser, [field]: value });
-
-  // ---
+  const {
+    data,
+    users,
+    selectedUser,
+    isDataChanges,
+    openDropdown,
+    handleToggle,
+    handleClose,
+    handleUserSelect,
+    undoChanges,
+    saveChanges,
+    setDepartment,
+    setCountry,
+    setStatus
+  } = useEditUser();
 
   const activeSave = isDataChanges ? s.active : '';
   const undoButtonStyle = `${s.buttonBox} ${s[button.undo]}`;
