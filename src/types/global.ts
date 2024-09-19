@@ -17,6 +17,10 @@ export type DataItemType = DataItem | UserDataItem;
 
 export type DataType = DataItem[] | UserDataItem[];
 
+export type SelectedArg = string[] | DataItemType;
+
+export type DropdownOnChange = (selected: SelectedArg) => void;
+
 export type DropdownProps = {
   label?: string;
   header: string | null;
@@ -25,10 +29,10 @@ export type DropdownProps = {
   isOpen: boolean;
   onToggle(): void;
   onClose(): void;
-  initSelectedItem?: DataItem | null;
+  initSelectedItem?: DataItem | boolean[] | null;
   handleSelectedItem?: (user: DataItemType) => void;
   disabled?: boolean;
-  onChange?: any;
+  onChange?: (selected: string[] | DataItemType) => void;
 };
 
 export type DropdownType = (props: DropdownProps) => ReactElement;

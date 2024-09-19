@@ -3,29 +3,29 @@ import * as gt from '../types/global';
 
 const useUserFilter = (users: gt.UserDataItem[], departmentsLimit: number) => {
   const [filteredUsers, setFilteredUsers] = useState<gt.UserDataItem[]>(users);
-  const [pickedDepartments, setPickedDepartments] = useState<string[]>([]);
-  const [pickedCountry, setPickedCountry] = useState<gt.DataItem | null>(null);
-  const [pickedStatus, setPickedStatus] = useState<gt.DataItem | null>(null);
+  const [departments, setDepartments] = useState<string[]>([]);
+  const [country, setCountry] = useState<gt.DataItem | null>(null);
+  const [status, setStatus] = useState<gt.DataItem | null>(null);
 
   const handleFilteredUsers = (users: gt.UserDataItem[]) =>
     setFilteredUsers(users);
 
   useEffect(() => {
-    if (pickedDepartments.length >= departmentsLimit) return;
-    setPickedCountry(null);
-    setPickedStatus(null);
-  }, [pickedDepartments, departmentsLimit]);
+    if (departments.length >= departmentsLimit) return;
+    setCountry(null);
+    setStatus(null);
+  }, [departments, departmentsLimit]);
 
   // --- Checks:
 
   const isDepartment = (selected: string[], user: gt.UserDataItem) =>
-    selected.includes(user.department.name);
+    selected?.includes(user.department.name);
 
   const isCountry = (selected: gt.DataItem, user: gt.UserDataItem) =>
-    selected.name === user.country.name;
+    selected?.name === user.country.name;
 
   const isStatus = (selected: gt.DataItem, user: gt.UserDataItem) =>
-    selected.name === user.status.name;
+    selected?.name === user.status.name;
 
   // ------ Departments:
 
@@ -36,14 +36,14 @@ const useUserFilter = (users: gt.UserDataItem[], departmentsLimit: number) => {
 
         if (isDepartment(selected, user)) res = user;
         if (res && selected.length >= departmentsLimit) {
-          if (pickedCountry && !isCountry(pickedCountry, res)) res = null;
-          if (res && pickedStatus && !isStatus(pickedStatus, res)) res = null;
+          if (country && !isCountry(country, res)) res = null;
+          if (res && status && !isStatus(status, res)) res = null;
         }
         return res;
       });
       setFilteredUsers(filtered || []);
     } else setFilteredUsers(users || []);
-    setPickedDepartments(selected);
+    setDepartments(selected);
   };
 
   // ------ Country:
@@ -53,14 +53,14 @@ const useUserFilter = (users: gt.UserDataItem[], departmentsLimit: number) => {
       let res;
 
       const isCountryFiltering =
-        isCountry(selected, user) && isDepartment(pickedDepartments, user);
+        isCountry(selected, user) && isDepartment(departments, user);
 
       if (isCountryFiltering) res = user;
-      if (res && pickedStatus && !isStatus(pickedStatus, res)) res = null;
+      if (res && status && !isStatus(status, res)) res = null;
       return res;
     });
     setFilteredUsers(filtered);
-    setPickedCountry(selected);
+    setCountry(selected);
   };
 
   // ------ Status:
@@ -70,25 +70,39 @@ const useUserFilter = (users: gt.UserDataItem[], departmentsLimit: number) => {
       let res;
 
       const isStatusFiltering =
-        isStatus(selected, user) && isDepartment(pickedDepartments, user);
+        isStatus(selected, user) && isDepartment(departments, user);
 
       if (isStatusFiltering) res = user;
-      if (res && pickedCountry && !isCountry(pickedCountry, res)) res = null;
+      if (res && country && !isCountry(country, res)) res = null;
       return res;
     });
     setFilteredUsers(filtered);
-    setPickedStatus(selected);
+    setStatus(selected);
+  };
+
+  // ------ Reset:
+
+  const resetSecondaryFilters = () => {
+    /*
+    if (departments.length < departmentsLimit) return;
+    const init = users.filter(user => isDepartment(departments, user));
+    */
+    setFilteredUsers(users);
+    setDepartments([]);
+    setCountry(null);
+    setStatus(null);
   };
 
   return {
     filteredUsers,
-    pickedDepartments,
-    pickedCountry,
-    pickedStatus,
+    pickedDepartments: departments,
+    pickedCountry: country,
+    pickedStatus: status,
     handleFilteredUsers,
     filterDepartments,
     filterCountry,
-    filterStatus
+    filterStatus,
+    resetSecondaryFilters
   };
 };
 

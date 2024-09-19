@@ -24,12 +24,16 @@
         width: 150px;
         border: 1px solid #c4c4c4;
 
-        &.deleteButton {
+        &.resetButton {
           display: flex;
           justify-content: center;
           align-items: center;
           width: 48px;
           background-color: transparent;
+
+          &:hover {
+            cursor: pointer;
+          }
         }
       }
     }

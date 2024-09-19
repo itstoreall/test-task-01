@@ -8,12 +8,13 @@ import Button from '../Button';
 import s from './FilterHeading.module.scss';
 
 type FilterHeadingProps = {
-  selectedDepartments: number;
+  selectedDepartments: string[];
   selectedCountry: gt.DataItem | null;
   selectedStatus: gt.DataItem | null;
   filterDepartments: (sevected: string[]) => void;
   filterCountry: (sevected: gt.DataItem) => void;
   filterStatus: (sevected: gt.DataItem) => void;
+  resetSecondaryFilters: () => void;
 };
 
 const config = {
@@ -48,14 +49,37 @@ const FilterHeading = (props: FilterHeadingProps) => {
     selectedStatus,
     filterDepartments,
     filterCountry,
-    filterStatus
+    filterStatus,
+    resetSecondaryFilters
   } = props;
 
   const { openDropdown, handleToggle, handleClose } = useDropdownState();
 
   const data = useData();
 
-  const isDisabled = selectedDepartments < departmentsLimit;
+  const isDisabled = selectedDepartments.length < departmentsLimit;
+
+  // ---
+
+  const handleDepartments: gt.DropdownOnChange = selected =>
+    filterDepartments(selected as string[]);
+
+  const handleCountry: gt.DropdownOnChange = selected =>
+    filterCountry(selected as gt.DataItem);
+
+  const handleStatus: gt.DropdownOnChange = selected =>
+    filterStatus(selected as gt.DataItem);
+
+  // ---
+
+  const initDepartments =
+    selectedDepartments.length === 0
+      ? Array(data.department.length).fill(false)
+      : null;
+
+  const initCountry = isDisabled ? null : selectedCountry;
+
+  const initStatus = isDisabled ? null : selectedStatus;
 
   return (
     <div className={s.filterHeading}>
@@ -67,9 +91,10 @@ const FilterHeading = (props: FilterHeadingProps) => {
           placeholder={departmentsPlaceholder}
           data={data.department}
           isOpen={openDropdown === departments}
+          initSelectedItem={initDepartments}
           onToggle={() => handleToggle(departments)}
           onClose={handleClose}
-          onChange={(selected: string[]) => filterDepartments(selected)}
+          onChange={handleDepartments}
         />
         <Dropdown
           label={country}
@@ -77,10 +102,10 @@ const FilterHeading = (props: FilterHeadingProps) => {
           placeholder={countryPlaceholder}
           data={data.country}
           isOpen={openDropdown === country}
-          initSelectedItem={isDisabled ? null : selectedCountry}
+          initSelectedItem={initCountry}
           onToggle={() => handleToggle(country)}
           onClose={handleClose}
-          onChange={(selected: gt.DataItem) => filterCountry(selected)}
+          onChange={handleCountry}
           disabled={isDisabled}
         />
         <Dropdown
@@ -89,15 +114,15 @@ const FilterHeading = (props: FilterHeadingProps) => {
           placeholder={statusPlaceholder}
           data={data.status}
           isOpen={openDropdown === status}
-          initSelectedItem={isDisabled ? null : selectedStatus}
+          initSelectedItem={initStatus}
           onToggle={() => handleToggle(status)}
           onClose={handleClose}
-          onChange={(selected: gt.DataItem) => filterStatus(selected)}
+          onChange={handleStatus}
           disabled={isDisabled}
         />
 
         <div className={s.buttonBlock}>
-          <button className={s.deleteButton}>
+          <button className={s.resetButton} onClick={resetSecondaryFilters}>
             <BinIcon />
           </button>
 

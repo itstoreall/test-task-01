@@ -6,7 +6,7 @@ import useDropdown from '../../hooks/useDropdown';
 import * as gt from '../../types/global';
 import s from './Dropdown.module.scss';
 
-type SelectedItem = gt.DataItemType | null | undefined;
+type SelectedItem = gt.DataItemType | boolean[] | null | undefined;
 
 const config = {
   dropdown: {
@@ -67,7 +67,7 @@ const Dropdown: gt.DropdownType = props => {
         <input
           className={s.input}
           placeholder={placeholder}
-          value={selectedItem ? selectedItem.name : ''}
+          value={selectedItem ? (selectedItem as gt.DataItemType).name : ''}
           onClick={() => !isOpen && !disabled && onToggle()}
           disabled={disabled}
           readOnly

@@ -27,7 +27,8 @@ const Users = () => {
     handleFilteredUsers,
     filterDepartments,
     filterCountry,
-    filterStatus
+    filterStatus,
+    resetSecondaryFilters
   } = useUserFilter(users, departmentsLimit);
 
   useEffect(() => {
@@ -43,12 +44,13 @@ const Users = () => {
 
         <div className={s.filterHeadingBlock}>
           <FilterHeading
-            selectedDepartments={pickedDepartments.length}
+            selectedDepartments={pickedDepartments}
             selectedCountry={pickedCountry}
             selectedStatus={pickedStatus}
             filterDepartments={filterDepartments}
             filterCountry={filterCountry}
             filterStatus={filterStatus}
+            resetSecondaryFilters={resetSecondaryFilters}
           />
         </div>
 

@@ -6,8 +6,16 @@ import * as gt from '../../types/global';
 import s from './DropdownSelectable.module.scss';
 
 const DropdownSelectable: gt.DropdownType = props => {
-  const { header, placeholder, data, isOpen, onToggle, onClose, onChange } =
-    props;
+  const {
+    header,
+    placeholder,
+    data,
+    isOpen,
+    initSelectedItem,
+    onToggle,
+    onClose,
+    onChange
+  } = props;
 
   const [dataItems, setDataItems] = useState<gt.DataItem[]>([]);
   const [checkedItems, setCheckedItems] = useState<boolean[]>([]);
@@ -16,9 +24,14 @@ const DropdownSelectable: gt.DropdownType = props => {
   const { dropdownRef } = useDropdown({ isOpen, onClose });
 
   useEffect(() => {
-    setCheckedItems(Array(data.length).fill(false));
     setDataItems(data as gt.DataItem[]);
   }, [data]);
+
+  useEffect(() => {
+    initSelectedItem && setCheckedItems(initSelectedItem as boolean[]);
+  }, [initSelectedItem]);
+
+  // ---
 
   const handleItemCheck = (index: number) => {
     const newCheckedItems = [...checkedItems];
@@ -29,12 +42,14 @@ const DropdownSelectable: gt.DropdownType = props => {
       .filter((_, i) => newCheckedItems[i])
       .map(item => item.name);
 
-    onChange(selectedDepartments);
+    onChange && onChange(selectedDepartments);
   };
 
   const handleSearchChange = (e: gt.InputChangeEvent) => {
     setSearchTerm(e.target.value);
   };
+
+  // ---
 
   const chosenData = dataItems.filter((_, index) => checkedItems[index]);
 
