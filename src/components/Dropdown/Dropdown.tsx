@@ -26,6 +26,7 @@ const Dropdown: gt.DropdownType = props => {
     data,
     isOpen,
     initSelectedItem,
+    onChange,
     disabled = false
   } = props;
 
@@ -48,6 +49,7 @@ const Dropdown: gt.DropdownType = props => {
 
   const handleSelect = (item: gt.DataItemType) => {
     setSelectedItem(item);
+    onChange && onChange(item);
     onClose();
   };
 

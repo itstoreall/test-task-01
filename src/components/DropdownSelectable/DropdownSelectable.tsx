@@ -6,7 +6,8 @@ import * as gt from '../../types/global';
 import s from './DropdownSelectable.module.scss';
 
 const DropdownSelectable: gt.DropdownType = props => {
-  const { header, placeholder, data, isOpen, onToggle, onClose } = props;
+  const { header, placeholder, data, isOpen, onToggle, onClose, onChange } =
+    props;
 
   const [dataItems, setDataItems] = useState<gt.DataItem[]>([]);
   const [checkedItems, setCheckedItems] = useState<boolean[]>([]);
@@ -19,10 +20,16 @@ const DropdownSelectable: gt.DropdownType = props => {
     setDataItems(data as gt.DataItem[]);
   }, [data]);
 
-  const handleItemClick = (index: number) => {
+  const handleItemCheck = (index: number) => {
     const newCheckedItems = [...checkedItems];
     newCheckedItems[index] = !newCheckedItems[index];
     setCheckedItems(newCheckedItems);
+
+    const selectedDepartments = dataItems
+      .filter((_, i) => newCheckedItems[i])
+      .map(item => item.name);
+
+    onChange(selectedDepartments);
   };
 
   const handleSearchChange = (e: gt.InputChangeEvent) => {
@@ -61,7 +68,7 @@ const DropdownSelectable: gt.DropdownType = props => {
                 <li
                   key={`chosen-${index}`}
                   className={s.dropdownItem}
-                  onClick={e => handleItemClick(dataItems.indexOf(item))}
+                  onClick={() => handleItemCheck(dataItems.indexOf(item))}
                 >
                   <span className={s.itemContent}>
                     <span className={s.symbol}>
@@ -79,7 +86,7 @@ const DropdownSelectable: gt.DropdownType = props => {
                 <li
                   key={`filtered-${index}`}
                   className={s.dropdownItem}
-                  onClick={() => handleItemClick(dataItems.indexOf(item))}
+                  onClick={() => handleItemCheck(dataItems.indexOf(item))}
                 >
                   <span className={s.itemContent}>
                     <span className={s.symbol}>

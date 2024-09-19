@@ -28,6 +28,7 @@ export type DropdownProps = {
   initSelectedItem?: DataItem | null;
   handleSelectedItem?: (user: DataItemType) => void;
   disabled?: boolean;
+  onChange?: any;
 };
 
 export type DropdownType = (props: DropdownProps) => ReactElement;
