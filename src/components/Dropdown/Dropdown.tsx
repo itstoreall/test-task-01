@@ -87,7 +87,12 @@ const Dropdown: gt.DropdownType = props => {
 
   // ---
 
+  const disabledStyle = disabled ? s.disabled : '';
+  const selectedStyle = selectedItem && !isOpen ? s.selected : '';
+  const placeholderStyle = `${s.input} ${disabledStyle} ${selectedStyle}`;
   const symbolStyle = `${s.symbol} ${(isStatus || isDepartment) && s.expand}`;
+
+  console.log('selectedItem:', isOpen, selectedItem);
 
   return (
     <form className={s.dropdownForm}>
@@ -95,7 +100,7 @@ const Dropdown: gt.DropdownType = props => {
 
       <div className={s.select} ref={dropdownRef}>
         <input
-          className={s.input}
+          className={placeholderStyle}
           placeholder={currentPlaceholder}
           value={searchTerm}
           onFocus={handleFocus}

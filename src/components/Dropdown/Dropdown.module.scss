@@ -22,6 +22,22 @@ form.dropdownForm {
       background-color: transparent;
       border: 1px solid #e3e8ee;
       outline: none;
+
+      &::placeholder {
+        color: #7d7d7d;
+      }
+
+      &.selected {
+        &::placeholder {
+          color: #000000;
+        }
+      }
+
+      &.disabled {
+        &::placeholder {
+          color: #c2c2c2;
+        }
+      }
     }
 
     > span.arrowButton {

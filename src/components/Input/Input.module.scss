@@ -13,14 +13,17 @@ form.inputForm {
     padding: 0 24px;
     height: 46px;
     font-size: 14px;
-    color: #5e626b;
+    color: #000000;
     background-color: transparent;
     border: 1px solid #e3e8ee;
     outline: none;
 
+    &::placeholder {
+      color: #c2c2c2;
+    }
+
     &.readOnly {
       pointer-events: none;
-      user-select: none;
     }
 
     /*

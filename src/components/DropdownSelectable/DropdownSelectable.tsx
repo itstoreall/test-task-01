@@ -15,7 +15,8 @@ const DropdownSelectable: gt.DropdownType = props => {
     initSelectedItem,
     onToggle,
     onClose,
-    onChange
+    onChange,
+    disabled = false
   } = props;
 
   const [currentPlaceholder, setCurrentPlaceholder] = useState(placeholder);
@@ -25,10 +26,11 @@ const DropdownSelectable: gt.DropdownType = props => {
 
   const { dropdownRef } = useDropdown({ isOpen, onClose });
 
+  const picked = checkedItems.filter(item => item === true).length;
+
   useEffect(() => setDataItems(data as gt.DataItem[]), [data]);
 
   useEffect(() => {
-    const picked = checkedItems.filter(item => item === true).length;
     setCurrentPlaceholder(picked ? `Selected(${picked})` : placeholder);
   }, [checkedItems]);
 
@@ -65,13 +67,19 @@ const DropdownSelectable: gt.DropdownType = props => {
       item.name.toLowerCase().startsWith(searchTerm.toLowerCase())
   );
 
+  // ---
+
+  const selectedStyle = picked ? s.selected : '';
+  const disabledStyle = disabled ? s.disabled : '';
+  const placeholderStyle = `${s.input} ${selectedStyle} ${disabledStyle}`;
+
   return (
     <form className={s.dropdownForm}>
       {header && <label className={s.label}>{header}</label>}
 
       <div className={s.select} ref={dropdownRef}>
         <input
-          className={s.input}
+          className={placeholderStyle}
           placeholder={currentPlaceholder}
           value={searchTerm}
           onChange={handleSearchChange}
