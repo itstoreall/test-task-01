@@ -10,13 +10,16 @@ type SelectedItem = gt.DataItemType | boolean[] | null | undefined;
 
 const config = {
   dropdown: {
+    user: 'user',
     department: 'department',
     country: 'country',
     status: 'status'
-  }
+  },
+  placeholderOnFocus: 'Type to search...'
 };
 
-const { department, status } = config.dropdown;
+const { user, department, status } = config.dropdown;
+const { placeholderOnFocus } = config;
 
 const Dropdown: gt.DropdownType = props => {
   const {
@@ -32,26 +35,34 @@ const Dropdown: gt.DropdownType = props => {
 
   const { onToggle, onClose, handleSelectedItem } = props;
   const initState = initSelectedItem || null;
+  const initPlaceholder = initSelectedItem
+    ? (initSelectedItem as gt.DataItemType).name
+    : placeholder;
 
+  const [currentPlaceholder, setCurrentPlaceholder] = useState(initPlaceholder);
   const [selectedItem, setSelectedItem] = useState<SelectedItem>(initState);
   const [searchTerm, setSearchTerm] = useState('');
 
   const { dropdownRef } = useDropdown({ isOpen, onClose });
   const { isDataItem } = useDataCheck();
 
+  const isUser = label === user;
   const isDepartment = label === department;
   const isStatus = label === status;
 
   useEffect(() => setSelectedItem(initSelectedItem), [initSelectedItem]);
 
+  useEffect(() => setCurrentPlaceholder(initPlaceholder), [initPlaceholder]);
+
   useEffect(() => {
     handleSelectedItem && handleSelectedItem(selectedItem as gt.DataItemType);
+    if (!isUser || !selectedItem) return;
+    setCurrentPlaceholder((selectedItem as gt.DataItemType).name);
   }, [selectedItem]);
 
   const toggleHandler = () => !disabled && onToggle();
 
   const handleSelect = (item: gt.DataItemType) => {
-    console.log('item:', item);
     setSelectedItem(item);
     onChange && onChange(item);
     setSearchTerm('');
@@ -62,13 +73,17 @@ const Dropdown: gt.DropdownType = props => {
     setSearchTerm(e.target.value);
   };
 
+  const handleFocus = () => {
+    setCurrentPlaceholder(placeholderOnFocus);
+  };
+
+  const handleBlur = () => {
+    setCurrentPlaceholder(initPlaceholder);
+  };
+
   const filteredData = (data as gt.DataItemType[]).filter(item =>
     item.name.toLowerCase().startsWith(searchTerm.toLowerCase())
   );
-
-  const currentPlaceholder = selectedItem
-    ? (selectedItem as gt.DataItemType).name
-    : placeholder;
 
   // ---
 
@@ -83,6 +98,8 @@ const Dropdown: gt.DropdownType = props => {
           className={s.input}
           placeholder={currentPlaceholder}
           value={searchTerm}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           onClick={() => !isOpen && !disabled && onToggle()}
           onChange={handleSearchChange}
           disabled={disabled}

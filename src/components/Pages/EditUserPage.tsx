@@ -62,6 +62,7 @@ const EditUser = () => {
 
         <div className={s.ownerBlock}>
           <Dropdown
+            label={user}
             header={user}
             placeholder={dropdown.userPlaceholder}
             data={users || []}
@@ -89,9 +90,9 @@ const EditUser = () => {
               placeholder={dropdown.departmentPlaceholder}
               data={data.department}
               isOpen={openDropdown === department}
+              initSelectedItem={selectedUser?.department ?? null}
               onToggle={() => handleToggle(department)}
               onClose={handleClose}
-              initSelectedItem={selectedUser?.department ?? null}
               handleSelectedItem={setDepartment}
               disabled={!selectedUser}
             />
@@ -104,9 +105,9 @@ const EditUser = () => {
               placeholder={dropdown.countryPlaceholder}
               data={data.country}
               isOpen={openDropdown === country}
+              initSelectedItem={selectedUser?.country ?? null}
               onToggle={() => handleToggle(country)}
               onClose={handleClose}
-              initSelectedItem={selectedUser?.country ?? null}
               handleSelectedItem={setCountry}
               disabled={!selectedUser}
             />
@@ -117,9 +118,9 @@ const EditUser = () => {
               placeholder={dropdown.statusPlaceholder}
               data={data.status}
               isOpen={openDropdown === status}
+              initSelectedItem={selectedUser?.status ?? null}
               onToggle={() => handleToggle(status)}
               onClose={handleClose}
-              initSelectedItem={selectedUser?.status ?? null}
               handleSelectedItem={setStatus}
               disabled={!selectedUser}
             />

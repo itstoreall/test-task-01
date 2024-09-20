@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import useDropdown from '../../hooks/useDropdown';
 import SelectArrowIcon from '../../assets/icon/SelectArrowIcon';
@@ -17,15 +18,19 @@ const DropdownSelectable: gt.DropdownType = props => {
     onChange
   } = props;
 
+  const [currentPlaceholder, setCurrentPlaceholder] = useState(placeholder);
   const [dataItems, setDataItems] = useState<gt.DataItem[]>([]);
   const [checkedItems, setCheckedItems] = useState<boolean[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
 
   const { dropdownRef } = useDropdown({ isOpen, onClose });
 
+  useEffect(() => setDataItems(data as gt.DataItem[]), [data]);
+
   useEffect(() => {
-    setDataItems(data as gt.DataItem[]);
-  }, [data]);
+    const picked = checkedItems.filter(item => item === true).length;
+    setCurrentPlaceholder(picked ? `Selected(${picked})` : placeholder);
+  }, [checkedItems]);
 
   useEffect(() => {
     initSelectedItem && setCheckedItems(initSelectedItem as boolean[]);
@@ -43,6 +48,7 @@ const DropdownSelectable: gt.DropdownType = props => {
       .map(item => item.name);
 
     onChange && onChange(selectedDepartments);
+    setSearchTerm('');
   };
 
   const handleSearchChange = (e: gt.InputChangeEvent) => {
@@ -66,7 +72,7 @@ const DropdownSelectable: gt.DropdownType = props => {
       <div className={s.select} ref={dropdownRef}>
         <input
           className={s.input}
-          placeholder={placeholder}
+          placeholder={currentPlaceholder}
           value={searchTerm}
           onChange={handleSearchChange}
           onClick={() => !isOpen && onToggle()}
