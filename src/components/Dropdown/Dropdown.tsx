@@ -34,6 +34,7 @@ const Dropdown: gt.DropdownType = props => {
   const initState = initSelectedItem || null;
 
   const [selectedItem, setSelectedItem] = useState<SelectedItem>(initState);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const { dropdownRef } = useDropdown({ isOpen, onClose });
   const { isDataItem } = useDataCheck();
@@ -47,13 +48,27 @@ const Dropdown: gt.DropdownType = props => {
     handleSelectedItem && handleSelectedItem(selectedItem as gt.DataItemType);
   }, [selectedItem]);
 
+  const toggleHandler = () => !disabled && onToggle();
+
   const handleSelect = (item: gt.DataItemType) => {
+    console.log('item:', item);
     setSelectedItem(item);
     onChange && onChange(item);
+    setSearchTerm('');
     onClose();
   };
 
-  const toggleHandler = () => !disabled && onToggle();
+  const handleSearchChange = (e: gt.InputChangeEvent) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredData = (data as gt.DataItemType[]).filter(item =>
+    item.name.toLowerCase().startsWith(searchTerm.toLowerCase())
+  );
+
+  const currentPlaceholder = selectedItem
+    ? (selectedItem as gt.DataItemType).name
+    : placeholder;
 
   // ---
 
@@ -66,11 +81,11 @@ const Dropdown: gt.DropdownType = props => {
       <div className={s.select} ref={dropdownRef}>
         <input
           className={s.input}
-          placeholder={placeholder}
-          value={selectedItem ? (selectedItem as gt.DataItemType).name : ''}
+          placeholder={currentPlaceholder}
+          value={searchTerm}
           onClick={() => !isOpen && !disabled && onToggle()}
+          onChange={handleSearchChange}
           disabled={disabled}
-          readOnly
         />
 
         <span className={s.arrowButton} onClick={toggleHandler}>
@@ -80,25 +95,26 @@ const Dropdown: gt.DropdownType = props => {
         {isOpen && (
           <div className={s.dropdown}>
             <ul className={s.dropdownList}>
-              {data.map((item, idx) => (
-                <li
-                  key={idx}
-                  className={s.dropdownItem}
-                  onClick={() => handleSelect(item)}
-                >
-                  <span className={s.itemContent}>
-                    {isDataItem(item) && (
-                      <span className={symbolStyle}>
-                        {isStatus ? item.value.slice(0, 3) : item.value}
-                      </span>
-                    )}
+              {filteredData.length > 0 &&
+                filteredData.map((item, idx) => (
+                  <li
+                    key={idx}
+                    className={s.dropdownItem}
+                    onClick={() => handleSelect(item)}
+                  >
+                    <span className={s.itemContent}>
+                      {isDataItem(item) && (
+                        <span className={symbolStyle}>
+                          {isStatus ? item.value.slice(0, 3) : item.value}
+                        </span>
+                      )}
 
-                    <span className={s.textWrap}>
-                      <span className={s.text}>{item.name}</span>
+                      <span className={s.textWrap}>
+                        <span className={s.text}>{item.name}</span>
+                      </span>
                     </span>
-                  </span>
-                </li>
-              ))}
+                  </li>
+                ))}
             </ul>
           </div>
         )}
