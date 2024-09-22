@@ -19,7 +19,13 @@ form.inputForm {
     outline: none;
 
     &::placeholder {
-      color: #c2c2c2;
+      color: #7d7d7d;
+    }
+
+    &.disabled {
+      &::placeholder {
+        color: #c2c2c2;
+      }
     }
 
     &.readOnly {

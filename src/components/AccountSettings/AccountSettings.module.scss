@@ -1,0 +1,52 @@
+.accountSettingsBlock {
+  > h3.modalTitle {
+    margin-bottom: 60px;
+    font-family: 'Karla', sans-serif;
+    font-size: 24px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #000000;
+  }
+
+  .frame {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 60px;
+
+    &:nth-of-type(1) {
+      margin-bottom: 20px;
+    }
+  }
+
+  .buttonBlock {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+
+    > span {
+      &.buttonBox {
+        &.cancel {
+          > button {
+            width: 100px;
+          }
+        }
+
+        &.add {
+          > button {
+            width: 150px;
+          }
+        }
+      }
+
+      &.error {
+        position: absolute;
+        top: 14px;
+        left: 0;
+        font-size: 14px;
+        color: red;
+      }
+    }
+  }
+}

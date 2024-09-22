@@ -1,4 +1,5 @@
 import useDropdownState from '../../hooks/useDropdownState';
+import useModal from '../../hooks/useModal';
 import useData from '../../hooks/useData';
 import * as gt from '../../types/global';
 import DropdownSelectable from '../DropdownSelectable';
@@ -54,7 +55,7 @@ const FilterHeading = (props: FilterHeadingProps) => {
   } = props;
 
   const { openDropdown, handleToggle, handleClose } = useDropdownState();
-
+  const { openModal } = useModal();
   const data = useData();
 
   const isDisabled = selectedDepartments.length < departmentsLimit;
@@ -74,11 +75,10 @@ const FilterHeading = (props: FilterHeadingProps) => {
 
   const initDepartments =
     selectedDepartments.length === 0
-      ? Array(data.department.length).fill(false)
+      ? Array(data.departments.length).fill(false)
       : null;
 
   const initCountry = isDisabled ? null : selectedCountry;
-
   const initStatus = isDisabled ? null : selectedStatus;
 
   return (
@@ -89,18 +89,19 @@ const FilterHeading = (props: FilterHeadingProps) => {
         <DropdownSelectable
           header={null}
           placeholder={departmentsPlaceholder}
-          data={data.department}
+          data={data.departments}
           isOpen={openDropdown === departments}
           initSelectedItem={initDepartments}
           onToggle={() => handleToggle(departments)}
           onClose={handleClose}
           onChange={handleDepartments}
         />
+
         <Dropdown
           label={country}
           header={null}
           placeholder={countryPlaceholder}
-          data={data.country}
+          data={data.countries}
           isOpen={openDropdown === country}
           initSelectedItem={initCountry}
           onToggle={() => handleToggle(country)}
@@ -108,11 +109,12 @@ const FilterHeading = (props: FilterHeadingProps) => {
           onChange={handleCountry}
           disabled={isDisabled}
         />
+
         <Dropdown
           label={status}
           header={null}
           placeholder={statusPlaceholder}
-          data={data.status}
+          data={data.statuses}
           isOpen={openDropdown === status}
           initSelectedItem={initStatus}
           onToggle={() => handleToggle(status)}
@@ -126,7 +128,7 @@ const FilterHeading = (props: FilterHeadingProps) => {
             <BinIcon />
           </button>
 
-          <Button content={addUser} />
+          <Button content={addUser} onClick={openModal} />
         </div>
       </div>
     </div>

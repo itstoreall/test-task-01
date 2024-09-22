@@ -92,8 +92,6 @@ const Dropdown: gt.DropdownType = props => {
   const placeholderStyle = `${s.input} ${disabledStyle} ${selectedStyle}`;
   const symbolStyle = `${s.symbol} ${(isStatus || isDepartment) && s.expand}`;
 
-  console.log('selectedItem:', isOpen, selectedItem);
-
   return (
     <form className={s.dropdownForm}>
       {header && <label className={s.label}>{header}</label>}

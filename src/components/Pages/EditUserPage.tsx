@@ -1,4 +1,5 @@
 import useEditUser from '../../hooks/useEditUser';
+import useData from '../../hooks/useData';
 import * as gt from '../../types/global';
 import Input from '../Input';
 import Dropdown from '../Dropdown';
@@ -36,8 +37,8 @@ const { department, country, status } = config.dropdown;
 
 const EditUser = () => {
   const {
-    data,
-    users,
+    // data,
+    // users,
     selectedUser,
     isDataChanges,
     openDropdown,
@@ -50,6 +51,8 @@ const EditUser = () => {
     setCountry,
     setStatus
   } = useEditUser();
+
+  const data = useData();
 
   const activeSave = isDataChanges ? s.active : '';
   const undoButtonStyle = `${s.buttonBox} ${s[button.undo]}`;
@@ -65,7 +68,7 @@ const EditUser = () => {
             label={user}
             header={user}
             placeholder={dropdown.userPlaceholder}
-            data={users || []}
+            data={data.users || []}
             isOpen={openDropdown === user}
             onToggle={() => handleToggle(user)}
             onClose={handleClose}
@@ -81,6 +84,7 @@ const EditUser = () => {
               header={name}
               placeholder={input.userPlaceholder}
               value={selectedUser?.name || ''}
+              disabled
               readOnly
             />
 
@@ -88,7 +92,7 @@ const EditUser = () => {
               label={department}
               header={department}
               placeholder={dropdown.departmentPlaceholder}
-              data={data.department}
+              data={data.departments}
               isOpen={openDropdown === department}
               initSelectedItem={selectedUser?.department ?? null}
               onToggle={() => handleToggle(department)}
@@ -103,7 +107,7 @@ const EditUser = () => {
               label={country}
               header={country}
               placeholder={dropdown.countryPlaceholder}
-              data={data.country}
+              data={data.countries}
               isOpen={openDropdown === country}
               initSelectedItem={selectedUser?.country ?? null}
               onToggle={() => handleToggle(country)}
@@ -116,7 +120,7 @@ const EditUser = () => {
               label={status}
               header={status}
               placeholder={dropdown.statusPlaceholder}
-              data={data.status}
+              data={data.statuses}
               isOpen={openDropdown === status}
               initSelectedItem={selectedUser?.status ?? null}
               onToggle={() => handleToggle(status)}
@@ -133,6 +137,7 @@ const EditUser = () => {
               <Button content={button.undo} onClick={undoChanges} />
             )}
           </span>
+
           <span className={saveButtonStyle}>
             <Button content={button.save} onClick={saveChanges} />
           </span>

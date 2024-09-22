@@ -1,4 +1,5 @@
 import BinIcon from '../../assets/icon/BinIcon';
+import useUserList from '../../hooks/useUserList';
 import * as gt from '../../types/global';
 import s from './UserList.module.scss';
 
@@ -14,6 +15,8 @@ const config = {
 const { cell01, cell02, cell03, cell04 } = config.header;
 
 const UserList = ({ users }: { users: gt.UserDataItem[] }) => {
+  const { deleteUser } = useUserList();
+
   return (
     <div className={s.table}>
       <ul className={s.headerList}>
@@ -49,7 +52,7 @@ const UserList = ({ users }: { users: gt.UserDataItem[] }) => {
                 <span className={s.value}>{user.status.name}</span>
               </li>
               <li className={s.userDataItem}>
-                <span className={s.value}>
+                <span className={s.value} onClick={() => deleteUser(user.name)}>
                   <BinIcon />
                 </span>
               </li>

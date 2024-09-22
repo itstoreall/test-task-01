@@ -12,28 +12,30 @@ type HandleDropdownChange = (
   value: gt.DataItemType
 ) => void;
 
+const config = {
+  department: 'department',
+  country: 'country',
+  status: 'status'
+};
+
 const useEditUser = () => {
-  const [users, setUsers] = useState<gt.UserDataItem[] | null>(null);
   const [selectedUser, setSelectedUser] = useState<SelectedUser>(null);
   const [isDataChanges, setIsDataChanges] = useState(false);
 
   const { openDropdown, handleToggle, handleClose } = useDropdownState();
-
   const data = useData();
 
   useEffect(() => {
-    setUsers(data.user);
-  }, [data.user]);
-
-  useEffect(() => {
-    const initUsers = users?.find(user => user.name === selectedUser?.name);
+    const initUsers = data.users?.find(
+      user => user.name === selectedUser?.name
+    );
     const isChanged = isUserDataChange(initUsers!, selectedUser!);
     if (isChanged && !isDataChanges) {
       setIsDataChanges(true);
     } else if (!isChanged && isDataChanges) {
       setIsDataChanges(false);
     }
-  }, [selectedUser, users, isDataChanges]);
+  }, [selectedUser, data.users, isDataChanges]);
 
   type IsUserDataChange = (
     init: gt.UserDataItem,
@@ -59,8 +61,8 @@ const useEditUser = () => {
   };
 
   const undoChanges = () => {
-    if (!selectedUser || !users || !isDataChanges) return;
-    const initUsers = users.find(user => user.name === selectedUser.name);
+    if (!selectedUser || !data.users || !isDataChanges) return;
+    const initUsers = data.users.find(user => user.name === selectedUser.name);
     if (initUsers) {
       setSelectedUser(initUsers);
       setIsDataChanges(false);
@@ -68,29 +70,28 @@ const useEditUser = () => {
   };
 
   const saveChanges = () => {
-    if (!isDataChanges || !users || !selectedUser) return;
-    const updatedUser = users.map(user =>
+    if (!isDataChanges || !data.users || !selectedUser) return;
+    const updatedUsers = data.users.map(user =>
       user.name === selectedUser.name ? selectedUser : user
     );
     setIsDataChanges(false);
-    setUsers(updatedUser);
+    data.updateUsers(updatedUsers);
   };
 
   const setDepartment = (item: gt.DataItemType) =>
-    handleDropdownChange('department', item);
+    handleDropdownChange(config.department as keyof gt.UserDataItem, item);
 
   const setCountry = (item: gt.DataItemType) =>
-    handleDropdownChange('country', item);
+    handleDropdownChange(config.country as keyof gt.UserDataItem, item);
 
   const setStatus = (item: gt.DataItemType) =>
-    handleDropdownChange('status', item);
+    handleDropdownChange(config.status as keyof gt.UserDataItem, item);
 
   const handleDropdownChange: HandleDropdownChange = (field, value) =>
     selectedUser && setSelectedUser({ ...selectedUser, [field]: value });
 
   return {
     data,
-    users,
     selectedUser,
     isDataChanges,
     openDropdown,

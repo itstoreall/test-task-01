@@ -1,4 +1,6 @@
-import { ReactElement } from 'react';
+import { ReactElement, ReactNode } from 'react';
+
+export type ChildrenProps = { children: ReactNode };
 
 export type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
@@ -36,3 +38,21 @@ export type DropdownProps = {
 };
 
 export type DropdownType = (props: DropdownProps) => ReactElement;
+
+// ---
+
+export type ModalContext = {
+  isOpen: boolean;
+  openModal: () => void;
+  closeModal: () => void;
+};
+
+export type DataContext = {
+  users: UserDataItem[];
+  departments: DataItem[];
+  countries: DataItem[];
+  statuses: DataItem[];
+  createUser: (newUser: UserDataItem) => void;
+  updateUsers: (newUsers: UserDataItem[]) => void;
+  deleteUser: (useName: string) => boolean;
+};

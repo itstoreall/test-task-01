@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import useData from './useData';
 import * as gt from '../types/global';
 
 const useUserFilter = (users: gt.UserDataItem[], departmentsLimit: number) => {
@@ -7,14 +8,20 @@ const useUserFilter = (users: gt.UserDataItem[], departmentsLimit: number) => {
   const [country, setCountry] = useState<gt.DataItem | null>(null);
   const [status, setStatus] = useState<gt.DataItem | null>(null);
 
-  const handleFilteredUsers = (users: gt.UserDataItem[]) =>
-    setFilteredUsers(users);
+  const data = useData();
+
+  useEffect(() => handleFilteredUsers(data.users), [data.users]);
 
   useEffect(() => {
     if (departments.length >= departmentsLimit) return;
     setCountry(null);
     setStatus(null);
   }, [departments, departmentsLimit]);
+
+  // ---
+
+  const handleFilteredUsers = (users: gt.UserDataItem[]) =>
+    setFilteredUsers(users);
 
   // --- Checks:
 

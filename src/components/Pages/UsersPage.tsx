@@ -1,22 +1,20 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
 import useData from '../../hooks/useData';
 import useUserFilter from '../../hooks/useUserFilter';
-import * as gt from '../../types/global';
+import AccountSettings from '../AccountSettings';
 import FilterHeading from '../FilterHeading';
 import UserList from '../UserList';
+import Modal from '../Modal';
 import s from './Pages.module.scss';
 
 const config = {
   title: 'Users',
-  departmentsLimit: 3
+  departmentsLimit: 3,
+  modalTitle: 'add user'
 };
 
 const { title, departmentsLimit } = config;
 
 const Users = () => {
-  const [users, setUsers] = useState<gt.UserDataItem[]>([]);
-
   const data = useData();
 
   const {
@@ -24,18 +22,11 @@ const Users = () => {
     pickedDepartments,
     pickedCountry,
     pickedStatus,
-    handleFilteredUsers,
     filterDepartments,
     filterCountry,
     filterStatus,
     resetSecondaryFilters
-  } = useUserFilter(users, departmentsLimit);
-
-  useEffect(() => {
-    if (users.length > 0) return;
-    setUsers(data.user);
-    handleFilteredUsers(data.user);
-  }, [data]);
+  } = useUserFilter(data.users, departmentsLimit);
 
   return (
     <main className={s.main}>
@@ -57,6 +48,10 @@ const Users = () => {
         <div className={s.userListBlock}>
           <UserList users={filteredUsers} />
         </div>
+
+        <Modal>
+          <AccountSettings />
+        </Modal>
       </section>
     </main>
   );

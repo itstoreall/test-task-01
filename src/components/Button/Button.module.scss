@@ -3,9 +3,18 @@ button.button {
   font-size: 14px;
   font-weight: 300;
   letter-spacing: 0.2px;
+  color: #000000;
   background-color: transparent;
-  border: none;
+  border: 1px solid #c4c4c4;
   user-select: none;
+
+  &.active {
+    background-color: #c4c4c4;
+  }
+
+  &.disabled {
+    color: #c4c4c4;
+  }
 
   &:hover {
     cursor: pointer;
