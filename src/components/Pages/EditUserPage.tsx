@@ -37,8 +37,6 @@ const { department, country, status } = config.dropdown;
 
 const EditUser = () => {
   const {
-    // data,
-    // users,
     selectedUser,
     isDataChanges,
     openDropdown,

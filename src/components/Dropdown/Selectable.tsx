@@ -4,9 +4,9 @@ import useDropdown from '../../hooks/useDropdown';
 import SelectArrowIcon from '../../assets/icon/SelectArrowIcon';
 import CheckboxIcon from '../../assets/icon/CheckboxIcon';
 import * as gt from '../../types/global';
-import s from './DropdownSelectable.module.scss';
+import s from './Dropdown.module.scss';
 
-const DropdownSelectable: gt.DropdownType = props => {
+const Selectable: gt.DropdownType = props => {
   const {
     header,
     placeholder,
@@ -72,6 +72,7 @@ const DropdownSelectable: gt.DropdownType = props => {
   const selectedStyle = picked ? s.selected : '';
   const disabledStyle = disabled ? s.disabled : '';
   const placeholderStyle = `${s.input} ${selectedStyle} ${disabledStyle}`;
+  const dropdownContentStyle = `${s.dropdownContent} ${s.scrollbar}`;
 
   return (
     <form className={s.dropdownForm}>
@@ -92,43 +93,49 @@ const DropdownSelectable: gt.DropdownType = props => {
 
         {isOpen && (
           <div className={s.dropdown}>
-            <ul className={s.dropdownList}>
-              {chosenData.map((item, index) => (
-                <li
-                  key={`chosen-${index}`}
-                  className={s.dropdownItem}
-                  onClick={() => handleItemCheck(dataItems.indexOf(item))}
-                >
-                  <span className={s.itemContent}>
-                    <span className={s.symbol}>
-                      <CheckboxIcon isChecked={true} />
-                    </span>
+            <div className={dropdownContentStyle}>
+              <ul className={s.dropdownList}>
+                {chosenData.map((item, index) => (
+                  <li
+                    key={`chosen-${index}`}
+                    className={s.dropdownItem}
+                    onClick={() => handleItemCheck(dataItems.indexOf(item))}
+                  >
+                    <span className={s.itemContent}>
+                      <span className={s.symbol}>
+                        <CheckboxIcon isChecked={true} />
+                      </span>
 
-                    <span className={s.textWrap}>
-                      <span className={s.text}>{item.name}</span>
+                      <span className={s.textWrap}>
+                        <span className={s.text} title={item.name}>
+                          {item.name}
+                        </span>
+                      </span>
                     </span>
-                  </span>
-                </li>
-              ))}
+                  </li>
+                ))}
 
-              {filteredData.map((item, index) => (
-                <li
-                  key={`filtered-${index}`}
-                  className={s.dropdownItem}
-                  onClick={() => handleItemCheck(dataItems.indexOf(item))}
-                >
-                  <span className={s.itemContent}>
-                    <span className={s.symbol}>
-                      <CheckboxIcon isChecked={false} />
-                    </span>
+                {filteredData.map((item, index) => (
+                  <li
+                    key={`filtered-${index}`}
+                    className={s.dropdownItem}
+                    onClick={() => handleItemCheck(dataItems.indexOf(item))}
+                  >
+                    <span className={s.itemContent}>
+                      <span className={s.symbol}>
+                        <CheckboxIcon isChecked={false} />
+                      </span>
 
-                    <span className={s.textWrap}>
-                      <span className={s.text}>{item.name}</span>
+                      <span className={s.textWrap}>
+                        <span className={s.text} title={item.name}>
+                          {item.name}
+                        </span>
+                      </span>
                     </span>
-                  </span>
-                </li>
-              ))}
-            </ul>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         )}
       </div>
@@ -136,4 +143,4 @@ const DropdownSelectable: gt.DropdownType = props => {
   );
 };
 
-export default DropdownSelectable;
+export default Selectable;

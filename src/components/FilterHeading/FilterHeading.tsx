@@ -2,7 +2,7 @@ import useDropdownState from '../../hooks/useDropdownState';
 import useModal from '../../hooks/useModal';
 import useData from '../../hooks/useData';
 import * as gt from '../../types/global';
-import DropdownSelectable from '../DropdownSelectable';
+import DropdownSelectable from '../Dropdown/Selectable';
 import Dropdown from '../Dropdown';
 import BinIcon from '../../assets/icon/BinIcon';
 import Button from '../Button';

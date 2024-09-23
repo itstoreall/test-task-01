@@ -78,7 +78,11 @@ const Dropdown: gt.DropdownType = props => {
   };
 
   const handleBlur = () => {
-    setCurrentPlaceholder(initPlaceholder);
+    const placeholder =
+      isUser && selectedItem
+        ? (selectedItem as gt.DataItemType).name
+        : initPlaceholder;
+    setCurrentPlaceholder(placeholder);
   };
 
   const filteredData = (data as gt.DataItemType[]).filter(item =>
@@ -91,6 +95,8 @@ const Dropdown: gt.DropdownType = props => {
   const selectedStyle = selectedItem && !isOpen ? s.selected : '';
   const placeholderStyle = `${s.input} ${disabledStyle} ${selectedStyle}`;
   const symbolStyle = `${s.symbol} ${(isStatus || isDepartment) && s.expand}`;
+  const scrollbarStyle = !isStatus ? s.scrollbar : '';
+  const dropdownContentStyle = `${s.dropdownContent} ${scrollbarStyle}`;
 
   return (
     <form className={s.dropdownForm}>
@@ -114,28 +120,30 @@ const Dropdown: gt.DropdownType = props => {
 
         {isOpen && (
           <div className={s.dropdown}>
-            <ul className={s.dropdownList}>
-              {filteredData.length > 0 &&
-                filteredData.map((item, idx) => (
-                  <li
-                    key={idx}
-                    className={s.dropdownItem}
-                    onClick={() => handleSelect(item)}
-                  >
-                    <span className={s.itemContent}>
-                      {isDataItem(item) && (
-                        <span className={symbolStyle}>
-                          {isStatus ? item.value.slice(0, 3) : item.value}
-                        </span>
-                      )}
+            <div className={dropdownContentStyle}>
+              <ul className={s.dropdownList}>
+                {filteredData.length > 0 &&
+                  filteredData.map((item, idx) => (
+                    <li
+                      key={idx}
+                      className={s.dropdownItem}
+                      onClick={() => handleSelect(item)}
+                    >
+                      <span className={s.itemContent}>
+                        {isDataItem(item) && (
+                          <span className={symbolStyle}>
+                            {isStatus ? item.value.slice(0, 3) : item.value}
+                          </span>
+                        )}
 
-                      <span className={s.textWrap}>
-                        <span className={s.text}>{item.name}</span>
+                        <span className={s.textWrap}>
+                          <span className={s.text}>{item.name}</span>
+                        </span>
                       </span>
-                    </span>
-                  </li>
-                ))}
-            </ul>
+                    </li>
+                  ))}
+              </ul>
+            </div>
           </div>
         )}
       </div>
