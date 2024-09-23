@@ -52,9 +52,8 @@ const EditUser = () => {
 
   const data = useData();
 
-  const activeSave = isDataChanges ? s.active : '';
   const undoButtonStyle = `${s.buttonBox} ${s[button.undo]}`;
-  const saveButtonStyle = `${s.buttonBox} ${s[button.save]} ${activeSave}`;
+  const saveButtonStyle = `${s.buttonBox} ${s[button.save]}`;
 
   return (
     <main className={s.main}>
@@ -132,12 +131,20 @@ const EditUser = () => {
         <div className={`${s.buttonBlock}`}>
           <span className={undoButtonStyle}>
             {isDataChanges && (
-              <Button content={button.undo} onClick={undoChanges} />
+              <Button
+                content={button.undo}
+                disabled={!isDataChanges}
+                onClick={undoChanges}
+              />
             )}
           </span>
 
           <span className={saveButtonStyle}>
-            <Button content={button.save} onClick={saveChanges} />
+            <Button
+              content={button.save}
+              disabled={!isDataChanges}
+              onClick={saveChanges}
+            />
           </span>
         </div>
       </section>

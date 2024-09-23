@@ -1,23 +1,32 @@
 @import '../../styles';
 
 header.header {
+  position: fixed;
+  width: 100%;
   min-width: $max;
-  border-bottom: 1px solid #000000;
+  background-color: $colorWhite;
+  border-bottom: 1px solid $colorBlack;
+  z-index: 31;
 
-  nav.navigation {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px 0;
+  .headerContent {
+    width: 100svw;
+    max-width: $max;
 
-    > a {
-      > button {
-        width: 200px;
-      }
+    nav.navigation {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px 0;
 
-      &.active {
+      > a {
         > button {
-          background-color: #c4c4c4;
+          width: 200px;
+        }
+
+        &.active {
+          > button {
+            background-color: $colorGreyMiddleC4;
+          }
         }
       }
     }

@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
-import SelectArrowIcon from '../../assets/icon/SelectArrowIcon';
+import useDropdownContent from '../../hooks/useDropdownContent';
 import useDataCheck from '../../hooks/useDataCheck';
 import useDropdown from '../../hooks/useDropdown';
+import SelectArrowIcon from '../../assets/icon/SelectArrowIcon';
 import * as gt from '../../types/global';
 import s from './Dropdown.module.scss';
 
@@ -43,12 +44,19 @@ const Dropdown: gt.DropdownType = props => {
   const [selectedItem, setSelectedItem] = useState<SelectedItem>(initState);
   const [searchTerm, setSearchTerm] = useState('');
 
+  const filteredData = (data as gt.DataItemType[]).filter(item =>
+    item.name.toLowerCase().startsWith(searchTerm.toLowerCase())
+  );
+
+  const { dropdownContentRef, isOverflow } = useDropdownContent(filteredData);
   const { dropdownRef } = useDropdown({ isOpen, onClose });
   const { isDataItem } = useDataCheck();
 
   const isUser = label === user;
   const isDepartment = label === department;
   const isStatus = label === status;
+
+  // ---
 
   useEffect(() => setSelectedItem(initSelectedItem), [initSelectedItem]);
 
@@ -59,6 +67,8 @@ const Dropdown: gt.DropdownType = props => {
     if (!isUser || !selectedItem) return;
     setCurrentPlaceholder((selectedItem as gt.DataItemType).name);
   }, [selectedItem]);
+
+  // ---
 
   const toggleHandler = () => !disabled && onToggle();
 
@@ -85,10 +95,6 @@ const Dropdown: gt.DropdownType = props => {
     setCurrentPlaceholder(placeholder);
   };
 
-  const filteredData = (data as gt.DataItemType[]).filter(item =>
-    item.name.toLowerCase().startsWith(searchTerm.toLowerCase())
-  );
-
   // ---
 
   const disabledStyle = disabled ? s.disabled : '';
@@ -96,7 +102,8 @@ const Dropdown: gt.DropdownType = props => {
   const placeholderStyle = `${s.input} ${disabledStyle} ${selectedStyle}`;
   const symbolStyle = `${s.symbol} ${(isStatus || isDepartment) && s.expand}`;
   const scrollbarStyle = !isStatus ? s.scrollbar : '';
-  const dropdownContentStyle = `${s.dropdownContent} ${scrollbarStyle}`;
+  const overflowStyle = isOverflow ? scrollbarStyle : '';
+  const dropdownContentStyle = `${s.dropdownContent} ${overflowStyle}`;
 
   return (
     <form className={s.dropdownForm}>
@@ -120,7 +127,7 @@ const Dropdown: gt.DropdownType = props => {
 
         {isOpen && (
           <div className={s.dropdown}>
-            <div className={dropdownContentStyle}>
+            <div className={dropdownContentStyle} ref={dropdownContentRef}>
               <ul className={s.dropdownList}>
                 {filteredData.length > 0 &&
                   filteredData.map((item, idx) => (

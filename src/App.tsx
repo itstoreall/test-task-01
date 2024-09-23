@@ -25,10 +25,12 @@ function App() {
             <Header />
 
             <Container label={'page'}>
-              <Routes>
-                <Route path={edit} element={<EditUser />} />
-                <Route path={users} element={<Users />} />
-              </Routes>
+              <Container label={'page-scroll'}>
+                <Routes>
+                  <Route path={edit} element={<EditUser />} />
+                  <Route path={users} element={<Users />} />
+                </Routes>
+              </Container>
             </Container>
           </div>
         </DataProvider>

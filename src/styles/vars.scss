@@ -1,2 +1,17 @@
 $desktop: 1024px;
 $max: 1440px;
+
+$headerHeight: 89px;
+$mainHeight: calc(100svh - $headerHeight);
+
+// ------ Colors:
+
+$colorWhite: #ffffff;
+$colorGreyLight: #e3e8ee;
+$colorGreyMiddleC2: #c2c2c2;
+$colorGreyMiddleC4: #c4c4c4;
+$colorGrey: #7d7d7d;
+$colorGrey_50: #7d7d7d80;
+$colorGreyDark: #5e626b;
+$colorBlueDark: #1b2438;
+$colorBlack: #000000;

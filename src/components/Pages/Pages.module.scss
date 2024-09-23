@@ -1,9 +1,11 @@
+@import '../../styles/';
+
 main.main {
   padding: 80px 100px;
 
   > section.content {
     padding: 60px 80px 80px;
-    border: 1px solid #000000;
+    border: 1px solid $colorBlack;
 
     > h2 {
       font-family: 'Karla', sans-serif;
@@ -28,13 +30,12 @@ main.main {
 
       .companyInfoBlock {
         margin-bottom: 80px;
-        color: #5e626b;
 
         > h3.subtitle {
           margin-bottom: 40px;
           font-size: 20px;
           line-height: 32px;
-          color: #000000;
+          color: $colorBlack;
         }
 
         .frame {
@@ -55,26 +56,17 @@ main.main {
         > span.buttonBox {
           > button {
             text-transform: capitalize;
-            color: #c4c4c4;
-            border: 1px solid #c4c4c4;
           }
 
           &.undo {
             > button {
               width: 100px;
-              color: #000000;
             }
           }
 
           &.save {
             > button {
               width: 200px;
-            }
-
-            &.active {
-              > button {
-                color: #000000;
-              }
             }
           }
         }
@@ -90,9 +82,7 @@ main.main {
         margin-bottom: 40px;
       }
 
-      .userListBlock {
-        color: #5e626b;
-      }
+      // .userListBlock {} // *
     }
   }
 }

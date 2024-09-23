@@ -20,24 +20,24 @@ form.dropdownForm {
       width: calc(100% - 50px);
       height: 46px;
       font-size: 14px;
-      color: #5e626b;
+      color: $colorGreyDark;
       background-color: transparent;
-      border: 1px solid #e3e8ee;
+      border: 1px solid $colorGreyLight;
       outline: none;
 
       &::placeholder {
-        color: #7d7d7d;
+        color: $colorGrey;
       }
 
       &.selected {
         &::placeholder {
-          color: #000000;
+          color: $colorBlack;
         }
       }
 
       &.disabled {
         &::placeholder {
-          color: #c2c2c2;
+          color: $colorGreyMiddleC2;
         }
       }
     }
@@ -54,8 +54,8 @@ form.dropdownForm {
       top: 47px;
       padding-right: 12px;
       width: calc(100% - 14px);
-      background-color: white;
-      border: 1px solid #e3e8ee;
+      background-color: $colorWhite;
+      border: 1px solid $colorGreyLight;
       border-top: transparent;
       z-index: 22;
 
@@ -87,7 +87,7 @@ form.dropdownForm {
 
               > span {
                 font-size: 14px;
-                color: #5e626b;
+                color: $colorGreyDark;
                 white-space: nowrap;
 
                 &.symbol {
@@ -109,7 +109,7 @@ form.dropdownForm {
 
                   > span.text {
                     font-weight: 300;
-                    background-color: white;
+                    background-color: $colorWhite;
                   }
                 }
               }

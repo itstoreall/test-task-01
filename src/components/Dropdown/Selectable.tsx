@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
+import useDropdownContent from '../../hooks/useDropdownContent';
 import useDropdown from '../../hooks/useDropdown';
 import SelectArrowIcon from '../../assets/icon/SelectArrowIcon';
 import CheckboxIcon from '../../assets/icon/CheckboxIcon';
@@ -24,9 +25,20 @@ const Selectable: gt.DropdownType = props => {
   const [checkedItems, setCheckedItems] = useState<boolean[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
 
+  const chosenData = dataItems.filter((_, index) => checkedItems[index]);
+
+  const filteredData = dataItems.filter(
+    (item, index) =>
+      !checkedItems[index] &&
+      item.name.toLowerCase().startsWith(searchTerm.toLowerCase())
+  );
+
+  const { dropdownContentRef, isOverflow } = useDropdownContent(filteredData);
   const { dropdownRef } = useDropdown({ isOpen, onClose });
 
   const picked = checkedItems.filter(item => item === true).length;
+
+  // ---
 
   useEffect(() => setDataItems(data as gt.DataItem[]), [data]);
 
@@ -59,20 +71,11 @@ const Selectable: gt.DropdownType = props => {
 
   // ---
 
-  const chosenData = dataItems.filter((_, index) => checkedItems[index]);
-
-  const filteredData = dataItems.filter(
-    (item, index) =>
-      !checkedItems[index] &&
-      item.name.toLowerCase().startsWith(searchTerm.toLowerCase())
-  );
-
-  // ---
-
   const selectedStyle = picked ? s.selected : '';
   const disabledStyle = disabled ? s.disabled : '';
   const placeholderStyle = `${s.input} ${selectedStyle} ${disabledStyle}`;
-  const dropdownContentStyle = `${s.dropdownContent} ${s.scrollbar}`;
+  const overflowStyle = isOverflow ? s.scrollbar : '';
+  const dropdownContentStyle = `${s.dropdownContent} ${overflowStyle}`;
 
   return (
     <form className={s.dropdownForm}>
@@ -93,7 +96,7 @@ const Selectable: gt.DropdownType = props => {
 
         {isOpen && (
           <div className={s.dropdown}>
-            <div className={dropdownContentStyle}>
+            <div className={dropdownContentStyle} ref={dropdownContentRef}>
               <ul className={s.dropdownList}>
                 {chosenData.map((item, index) => (
                   <li

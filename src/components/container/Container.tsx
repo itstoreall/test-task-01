@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 import s from './Container.module.scss';
 
 type ContainerProps = {
-  label: 'page';
+  label: 'page' | 'page-scroll';
   children: ReactElement;
 };
 

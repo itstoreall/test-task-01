@@ -1,3 +1,5 @@
+@import '../../styles/';
+
 .table {
   .tableRow {
     display: flex;
@@ -13,7 +15,7 @@
       font-size: 14px;
       font-weight: 300;
       letter-spacing: 0.2px;
-      color: #5e626b;
+      color: $colorGreyDark;
     }
 
     &:nth-child(1) {
@@ -39,7 +41,7 @@
 
   > ul.headerList {
     @extend .tableRow;
-    border: 1px solid #e3e8ee;
+    border: 1px solid $colorGreyLight;
 
     > li.headerItem {
       @extend .tableCell;
@@ -49,13 +51,13 @@
         font-family: 'Karla', sans-serif;
         font-weight: 600;
         letter-spacing: 0.4px;
-        color: #000000;
+        color: $colorBlack;
       }
     }
   }
 
   > ul.userList {
-    border: 1px solid #e3e8ee;
+    border: 1px solid $colorGreyLight;
     border-top: none;
 
     > li.userItem {
@@ -72,7 +74,7 @@
           &:nth-child(1) {
             > span.value {
               font-weight: 400;
-              color: #1b2438;
+              color: $colorBlueDark;
             }
           }
 

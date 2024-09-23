@@ -1,19 +1,21 @@
+@import '../../styles/';
+
 button.button {
   height: 48px;
   font-size: 14px;
   font-weight: 300;
   letter-spacing: 0.2px;
-  color: #000000;
+  color: $colorBlack;
   background-color: transparent;
-  border: 1px solid #c4c4c4;
+  border: 1px solid $colorGreyMiddleC4;
   user-select: none;
 
   &.active {
-    background-color: #c4c4c4;
+    background-color: $colorGreyMiddleC4;
   }
 
   &.disabled {
-    color: #c4c4c4;
+    color: $colorGreyMiddleC4;
   }
 
   &:hover {

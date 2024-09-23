@@ -22,10 +22,12 @@ const Header = () => {
   return (
     <header className={s.header}>
       <Container label={'page'}>
-        <nav className={s.navigation}>
-          <NavButton path={edit.path} content={edit.content} />
-          <NavButton path={users.path} content={users.content} />
-        </nav>
+        <div className={s.headerContent}>
+          <nav className={s.navigation}>
+            <NavButton path={edit.path} content={edit.content} />
+            <NavButton path={users.path} content={users.content} />
+          </nav>
+        </div>
       </Container>
     </header>
   );

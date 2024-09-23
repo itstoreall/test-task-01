@@ -5,5 +5,15 @@
     margin: 0 auto;
     min-width: $max;
     max-width: $max;
+
+    &-scroll {
+      padding: $headerHeight 0 0;
+      height: $mainHeight;
+      overflow: scroll;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
   }
 }

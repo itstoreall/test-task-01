@@ -1,10 +1,12 @@
+@import '../../styles/';
+
 .filterHeading {
   > span.heading {
     display: block;
     margin-bottom: 12px;
     font-size: 14px;
     font-weight: 300;
-    color: #1b2438;
+    color: $colorBlueDark;
   }
 
   .filterBlock {

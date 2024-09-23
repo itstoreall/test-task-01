@@ -1,3 +1,5 @@
+@import './vars.scss';
+
 %extends-dropdown-scrollbar {
   &::-webkit-scrollbar {
     width: 4px;
@@ -10,7 +12,7 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #000000;
+    background-color: $colorBlack;
     border-radius: 2px;
 
     // &:hover {} // *
