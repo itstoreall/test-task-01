@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
-import useDropdownContent from '../../hooks/useDropdownContent';
+import useDropdownHeight from '../../hooks/useDropdownHeight';
 import useDataCheck from '../../hooks/useDataCheck';
 import useDropdown from '../../hooks/useDropdown';
 import SelectArrowIcon from '../../assets/icon/SelectArrowIcon';
@@ -48,7 +48,7 @@ const Dropdown: gt.DropdownType = props => {
     item.name.toLowerCase().startsWith(searchTerm.toLowerCase())
   );
 
-  const { dropdownContentRef, isOverflow } = useDropdownContent(filteredData);
+  const { dropdownListRef, isOverflow } = useDropdownHeight(filteredData);
   const { dropdownRef } = useDropdown({ isOpen, onClose });
   const { isDataItem } = useDataCheck();
 
@@ -93,6 +93,7 @@ const Dropdown: gt.DropdownType = props => {
         ? (selectedItem as gt.DataItemType).name
         : initPlaceholder;
     setCurrentPlaceholder(placeholder);
+    setTimeout(() => setSearchTerm(''), 150);
   };
 
   // ---
@@ -127,8 +128,8 @@ const Dropdown: gt.DropdownType = props => {
 
         {isOpen && (
           <div className={s.dropdown}>
-            <div className={dropdownContentStyle} ref={dropdownContentRef}>
-              <ul className={s.dropdownList}>
+            <div className={dropdownContentStyle}>
+              <ul className={s.dropdownList} ref={dropdownListRef}>
                 {filteredData.length > 0 &&
                   filteredData.map((item, idx) => (
                     <li

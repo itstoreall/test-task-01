@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
-import useDropdownContent from '../../hooks/useDropdownContent';
+import useDropdownHeight from '../../hooks/useDropdownHeight';
 import useDropdown from '../../hooks/useDropdown';
 import SelectArrowIcon from '../../assets/icon/SelectArrowIcon';
 import CheckboxIcon from '../../assets/icon/CheckboxIcon';
@@ -33,7 +33,7 @@ const Selectable: gt.DropdownType = props => {
       item.name.toLowerCase().startsWith(searchTerm.toLowerCase())
   );
 
-  const { dropdownContentRef, isOverflow } = useDropdownContent(filteredData);
+  const { dropdownListRef, isOverflow } = useDropdownHeight(filteredData);
   const { dropdownRef } = useDropdown({ isOpen, onClose });
 
   const picked = checkedItems.filter(item => item === true).length;
@@ -96,8 +96,8 @@ const Selectable: gt.DropdownType = props => {
 
         {isOpen && (
           <div className={s.dropdown}>
-            <div className={dropdownContentStyle} ref={dropdownContentRef}>
-              <ul className={s.dropdownList}>
+            <div className={dropdownContentStyle}>
+              <ul className={s.dropdownList} ref={dropdownListRef}>
                 {chosenData.map((item, index) => (
                   <li
                     key={`chosen-${index}`}

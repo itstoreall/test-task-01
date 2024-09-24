@@ -1,5 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
-import useData from './useData';
 import * as gt from '../types/global';
 
 const useUserFilter = (users: gt.UserDataItem[], departmentsLimit: number) => {
@@ -8,9 +8,7 @@ const useUserFilter = (users: gt.UserDataItem[], departmentsLimit: number) => {
   const [country, setCountry] = useState<gt.DataItem | null>(null);
   const [status, setStatus] = useState<gt.DataItem | null>(null);
 
-  const data = useData();
-
-  useEffect(() => handleFilteredUsers(data.users), [data.users]);
+  useEffect(() => handleFilteredUsers(users), [users]);
 
   useEffect(() => {
     if (departments.length >= departmentsLimit) return;
@@ -20,8 +18,16 @@ const useUserFilter = (users: gt.UserDataItem[], departmentsLimit: number) => {
 
   // ---
 
-  const handleFilteredUsers = (users: gt.UserDataItem[]) =>
+  const handleFilteredUsers = (incomingUsers: gt.UserDataItem[]) => {
+    let users = [...incomingUsers];
+
+    if (departments.length > 0)
+      users = users.filter(user => isDepartment(departments, user));
+
+    if (country) users = users.filter(user => isCountry(country, user));
+    if (status) users = users.filter(user => isStatus(status, user));
     setFilteredUsers(users);
+  };
 
   // --- Checks:
 
@@ -105,7 +111,6 @@ const useUserFilter = (users: gt.UserDataItem[], departmentsLimit: number) => {
     pickedDepartments: departments,
     pickedCountry: country,
     pickedStatus: status,
-    handleFilteredUsers,
     filterDepartments,
     filterCountry,
     filterStatus,
