@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import { ModalProvider } from './context/ModalContext';
 import { DataProvider } from './context/DataContext';
 import Header from './components/Header';
@@ -18,7 +18,7 @@ const { edit, users } = config.route;
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <ModalProvider>
         <DataProvider>
           <div className={s.app}>
@@ -35,7 +35,7 @@ function App() {
           </div>
         </DataProvider>
       </ModalProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
